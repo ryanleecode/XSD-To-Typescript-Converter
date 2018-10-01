@@ -1,25 +1,18 @@
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include <iostream>
+#include <tinyxml2.h>
 #include "simple_type.h"
+#include "../xmlparse/xml_element_name_parser.h"
 
 namespace tsgen {
   template<typename T>
   SimpleType<T>::SimpleType(
-      const std::string &name,
-      XSDPrimitive type,
-      std::unique_ptr<std::vector<T>> possibleValues
-  ): type_(type), possibleValues_(std::move(possibleValues)) {
+      const xmlparse::XMLElement &simpleTypeElement
+  ) {
 
-    auto formattedName = name;
-    boost::trim(formattedName);
-    std::vector<std::string> strs;
-    boost::split(strs, formattedName, boost::is_any_of("-,_"));
-    for (unsigned int i = 0; i < strs.size(); i += 1) {
-      strs[i][0] = (unsigned char) toupper(strs[i][0]);
-    }
-
-    this->name_ = boost::algorithm::join(strs, "");
+    auto rawName = std::string(simpleTypeElement.findAttribute("name")->value());
+    this->name_ = xmlparse::XMLElementNameToCamelCaseConverter(rawName).getCamelCaseName();
   }
 
   template<typename T>
@@ -28,7 +21,7 @@ namespace tsgen {
     tsDefBuilder << "type "
                  << this->name_
                  << " = "
-                 << "string"
+                 << (this->type_ == TypescriptPrimitive::STRING ? "string" : "number")
                  << ";";
 
     return tsDefBuilder.str();

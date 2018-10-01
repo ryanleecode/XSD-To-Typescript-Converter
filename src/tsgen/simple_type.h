@@ -3,27 +3,38 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "xsd_primitive.h"
+#include "typescript_primitive.h"
+#include "../util/NotImplementedException.h"
+#include "../xmlparse/XMLElement.h"
 
 namespace tsgen {
+  class ISimpleType {
+  public:
+    virtual ~ISimpleType() = default;
+
+    virtual std::string toTypescriptDefinition() const {
+      throw util::NotImplementedException();
+    };
+  };
 
   template<typename T>
-  class SimpleType {
+  class SimpleType : public ISimpleType {
   public:
-    SimpleType(const std::string &name,
-               XSDPrimitive type,
-               std::unique_ptr<std::vector<T>> possibleValues);
+    SimpleType(const xmlparse::XMLElement &simpleTypeElement);
 
-    virtual std::string toTypescriptDefinition() const;
+    std::string toTypescriptDefinition() const override;
 
   protected:
     std::string name_;
-    XSDPrimitive type_;
+    TypescriptPrimitive type_;
     std::unique_ptr<std::vector<T>> possibleValues_;
   };
 
   template
   class SimpleType<std::string>;
+
+  template
+  class SimpleType<int>;
 }
 
 

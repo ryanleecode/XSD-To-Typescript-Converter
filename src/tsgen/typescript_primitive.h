@@ -1,7 +1,7 @@
 #pragma once
 
 namespace tsgen {
-  enum XSDPrimitive {
+  enum TypescriptPrimitive {
     STRING,
     NUMBER
   };

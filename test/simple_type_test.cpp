@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/tsgen/xsd_primitive.h"
+#include "../src/tsgen/typescript_primitive.h"
 #include "../src/tsgen/simple_type.h"
 
 class SimpleTypeTest : public ::testing::Test {
@@ -13,34 +13,20 @@ protected:
 
 TEST_F(SimpleTypeTest,
        ShouldGenerateABasicStringTypeCorrectly) {
-  tsgen::SimpleType<std::string> simpleStringType(
+/*  tsgen::SimpleType<std::string> simpleStringType(
       "user-id",
-      tsgen::XSDPrimitive::STRING,
+      tsgen::TypescriptPrimitive::STRING,
       std::make_unique<std::vector<std::string>>());
   auto expectedString = "type UserId = string;";
-  ASSERT_STRCASEEQ(simpleStringType.toTypescriptDefinition().c_str(), expectedString);
-
-  tsgen::SimpleType<std::string> simpleStringType_2(
-      "friendship-indicator-field",
-      tsgen::XSDPrimitive::STRING,
-      std::make_unique<std::vector<std::string>>());
-  auto expectedString_2 = "type FriendshipIndicatorField = string;";
-  ASSERT_STRCASEEQ(simpleStringType_2.toTypescriptDefinition().c_str(), expectedString_2);
+  ASSERT_STRCASEEQ(simpleStringType.toTypescriptDefinition().c_str(), expectedString);*/
 }
 
 TEST_F(SimpleTypeTest,
        ShouldGenerateABasicNumberTypeCorrectly) {
-  tsgen::SimpleType<int> simpleType(
-      "user-id",
-      tsgen::XSDPrimitive::NUMBER,
+/*  tsgen::SimpleType<int> simpleType(
+      "apple-count",
+      tsgen::TypescriptPrimitive::NUMBER,
       std::make_unique<std::vector<int>>());
-  auto expectedString = "type UserId = string;";
-  ASSERT_STRCASEEQ(simpleType.toTypescriptDefinition().c_str(), expectedString);
-
-  tsgen::SimpleType<std::string> simpleType_2(
-      "friendship-indicator-field",
-      tsgen::XSDPrimitive::STRING,
-      std::make_unique<std::vector<std::string>>());
-  auto expectedString_2 = "type FriendshipIndicatorField = string;";
-  ASSERT_STRCASEEQ(simpleType_2.toTypescriptDefinition().c_str(), expectedString_2);
+  auto expectedString = "type AppleCount = number;";
+  ASSERT_STRCASEEQ(simpleType.toTypescriptDefinition().c_str(), expectedString);*/
 }
