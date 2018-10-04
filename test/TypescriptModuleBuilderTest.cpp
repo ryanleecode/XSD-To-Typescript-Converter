@@ -10,6 +10,7 @@
 #include "../src/xmlparse/XMLElementImp.h"
 
 using ::testing::AtLeast;
+using ::testing::StrictMock;
 using ::testing::Return;
 using ::testing::_;
 
@@ -66,15 +67,13 @@ TEST_F(TypescriptModuleBuilderTest,
       .Times(1)
       .WillOnce(Return("xs:schema"));
 
-  auto xmlElementPtr = std::make_shared<xmlparse::MockXMLAttribute>();
-
-  EXPECT_CALL(xmlElement, findAttribute(requiredAttributeName))
-      .Times(2)
-      .WillRepeatedly(Return(xmlElementPtr));
-
+  xmlparse::MockXMLAttribute *xmlElementPtr{new StrictMock<xmlparse::MockXMLAttribute>};
   EXPECT_CALL(*xmlElementPtr, value())
       .Times(1)
       .WillOnce(Return("my-namespace"));
+  EXPECT_CALL(xmlElement, findAttribute(requiredAttributeName))
+      .Times(2)
+      .WillRepeatedly(Return(xmlElementPtr));
 
   auto typescriptModule = typeScriptModuleFactory->createTypescriptModule(xmlElement);
 
