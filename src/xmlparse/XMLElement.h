@@ -9,7 +9,7 @@ namespace xmlparse {
   public:
     virtual ~XMLElement() = default;
 
-    virtual std::string name() const = 0;
+    virtual std::optional<std::string> name() const = 0;
 
     virtual std::unique_ptr<XMLElement> firstChildElement() const = 0;
 

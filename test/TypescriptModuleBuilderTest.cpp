@@ -10,72 +10,76 @@
 #include "../src/xmlparse/XMLElementImp.h"
 
 using ::testing::AtLeast;
-using ::testing::StrictMock;
 using ::testing::Return;
 using ::testing::_;
+using::testing::ByMove;
 
 const std::string requiredAttributeName = "xmlns";
 
 class TypescriptModuleBuilderTest : public ::testing::Test {
 protected:
-  void SetUp() override {
-    this->typeScriptModuleFactory = new tsgen::TypeScriptModuleFactory();
-    this->document = new tinyxml2::XMLDocument();
-  }
+    void SetUp() override {
+        this->typeScriptModuleFactory = new tsgen::TypeScriptModuleFactory();
+        this->document = new tinyxml2::XMLDocument();
+    }
 
-  void TearDown() override {
-    delete typeScriptModuleFactory;
-    delete document;
-  }
+    void TearDown() override {
+        delete typeScriptModuleFactory;
+        delete document;
+    }
 
-  tinyxml2::XMLDocument *document{};
-  tsgen::TypeScriptModuleFactory *typeScriptModuleFactory{};
+    tinyxml2::XMLDocument *document{};
+    tsgen::TypeScriptModuleFactory *typeScriptModuleFactory{};
 };
 
 TEST_F(TypescriptModuleBuilderTest,
        ShouldFailToCreateIfRootElementDoesNotHaveNameSchema) {
-  xmlparse::MockXMLElement xmlElement;
+    xmlparse::MockXMLElement xmlElement;
 
-  EXPECT_CALL(xmlElement, name())
-      .Times(1)
-      .WillOnce(Return("xs:notSchema"));
+    EXPECT_CALL(xmlElement, name())
+            .Times(1)
+            .WillOnce(Return(std::optional("xs:notSchema")));
 
-  EXPECT_THROW(typeScriptModuleFactory->createTypescriptModule(xmlElement),
-               xmlparse::IncorrectXMLElementNameException);
+    EXPECT_THROW(typeScriptModuleFactory->createTypescriptModule(xmlElement),
+                 xmlparse::IncorrectXMLElementNameException);
 }
 
 TEST_F(TypescriptModuleBuilderTest,
        ShouldFailToCreateIfRootElementDoesNotHaveAttributeXmlns) {
-  xmlparse::MockXMLElement xmlElement;
+    xmlparse::MockXMLElement xmlElement;
 
-  EXPECT_CALL(xmlElement, name())
-      .Times(1)
-      .WillOnce(Return("xs:schema"));
+    EXPECT_CALL(xmlElement, name())
+            .Times(1)
+            .WillOnce(Return(std::optional("xs:schema")));
 
-  EXPECT_CALL(xmlElement, findAttribute(_))
-      .Times(1)
-      .WillOnce(Return(nullptr));
+    EXPECT_CALL(xmlElement, findAttribute(_))
+            .Times(1);
 
-  EXPECT_THROW(typeScriptModuleFactory->createTypescriptModule(xmlElement),
-               xmlparse::MissingXMLAttributeException);
+    EXPECT_THROW(typeScriptModuleFactory->createTypescriptModule(xmlElement),
+                 xmlparse::MissingXMLAttributeException);
 }
 
 TEST_F(TypescriptModuleBuilderTest,
        ShouldCreateATypescriptModuleWithCorrectNamespace) {
-  xmlparse::MockXMLElement xmlElement;
-  EXPECT_CALL(xmlElement, name())
-      .Times(1)
-      .WillOnce(Return("xs:schema"));
+    xmlparse::MockXMLElement xmlElement;
+    EXPECT_CALL(xmlElement, name())
+            .Times(1)
+            .WillOnce(Return(std::optional("xs:schema")));
 
-  xmlparse::MockXMLAttribute *xmlElementPtr{new StrictMock<xmlparse::MockXMLAttribute>};
-  EXPECT_CALL(*xmlElementPtr, value())
-      .Times(1)
-      .WillOnce(Return("my-namespace"));
-  EXPECT_CALL(xmlElement, findAttribute(requiredAttributeName))
-      .Times(2)
-      .WillRepeatedly(Return(xmlElementPtr));
+    EXPECT_CALL(xmlElement, findAttribute(requiredAttributeName))
+            .Times(2)
+            .WillOnce([](const std::string& attrName) {
+                return std::make_unique<xmlparse::MockXMLAttribute>();
+            })
+            .WillOnce([](const std::string& attrName) {
+                auto xmlAttribute = std::make_unique<xmlparse::MockXMLAttribute>();
+                EXPECT_CALL(*xmlAttribute, value())
+                        .Times(1)
+                        .WillOnce(Return(std::optional("my-namespace")));
+                return std::move(xmlAttribute);
+            });
 
-  auto typescriptModule = typeScriptModuleFactory->createTypescriptModule(xmlElement);
+    auto typescriptModule = typeScriptModuleFactory->createTypescriptModule(xmlElement);
 
-  ASSERT_STRCASEEQ(typescriptModule->getModuleName().c_str(), "my-namespace");
+    ASSERT_STRCASEEQ(typescriptModule->getModuleName().c_str(), "my-namespace");
 }

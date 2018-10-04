@@ -6,8 +6,10 @@ xmlparse::XMLElementImp::XMLElementImp(
 ) : xmlElement_(xmlElement) {
 }
 
-std::string xmlparse::XMLElementImp::name() const {
-  return xmlElement_.Name() == nullptr ? std::string() : xmlElement_.Name();
+std::optional<std::string> xmlparse::XMLElementImp::name() const {
+  return xmlElement_.Name()
+    ? std::optional(std::string(xmlElement_.Name()))
+    : std::nullopt;
 }
 
 std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement(

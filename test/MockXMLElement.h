@@ -6,7 +6,7 @@
 namespace xmlparse {
   class MockXMLElement : public XMLElement {
   public:
-    MOCK_CONST_METHOD0(name, std::string());
+    MOCK_CONST_METHOD0(name, std::optional<std::string>());
 
     MOCK_METHOD0(firstChildElement, std::unique_ptr<XMLElement>());
 

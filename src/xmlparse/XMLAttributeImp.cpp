@@ -5,6 +5,8 @@ xmlparse::XMLAttributeImp::XMLAttributeImp(
 ) : xmlAttribute_(xmlAttribute) {
 }
 
-std::string xmlparse::XMLAttributeImp::value() const {
-  return xmlAttribute_.Name() == nullptr ? std::string() : xmlAttribute_.Name();
+std::optional<std::string> xmlparse::XMLAttributeImp::value() const {
+  return xmlAttribute_.Name()
+    ? std::optional(std::string(xmlAttribute_.Name()))
+    : std::nullopt;
 }

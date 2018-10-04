@@ -7,11 +7,11 @@
 #include "SimpleType.h"
 
 namespace tsgen {
-  typedef std::map<std::string, std::unique_ptr<ISimpleType>> SimpleTypeMap;
+  typedef std::optional<std::string> OptString;
+  typedef std::map<OptString, std::unique_ptr<ISimpleType>> SimpleTypeMap;
 
   class TypeScriptModule {
   public:
-
     std::string generateTypescriptSchema();
 
     std::string getModuleName() const;
