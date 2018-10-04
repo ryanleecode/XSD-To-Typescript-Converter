@@ -1,9 +1,9 @@
 #include <cstring>
 #include <sstream>
-#include "typescript_module.h"
-#include "../xmlparse/incorrect_xml_element_name_exception.h"
-#include "../xmlparse/missing_xml_attribute_exception.h"
-#include "typescript_module_factory.h"
+#include "TypescriptModule.h"
+#include "../xmlparse/IncorrectXMLElementNameException.h"
+#include "../xmlparse/MissingXMLAttributeException.h"
+#include "TypescriptModuleFactory.h"
 
 
 const std::string requiredAttributeName = "xmlns";
@@ -23,10 +23,10 @@ namespace tsgen {
     while (currentElement != nullptr) {
       if (std::string(currentElement->name()) == "xs:simpleType") {
         auto name = currentElement->findAttribute("name")->value();
-        auto type = std::string(currentElement
+/*        auto type = std::string(currentElement
                                     ->firstChildElement("xs:restriction")
                                     ->findAttribute("base")
-                                    ->value());
+                                    ->value());*/
         simpleTypes->insert(std::pair<std::string, std::unique_ptr<ISimpleType>>(
             name,
             std::unique_ptr<ISimpleType>(new SimpleType<std::string>(*currentElement))

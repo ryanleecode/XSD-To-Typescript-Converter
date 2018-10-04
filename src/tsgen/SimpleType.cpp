@@ -2,8 +2,8 @@
 #include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <tinyxml2.h>
-#include "simple_type.h"
-#include "../xmlparse/xml_element_name_parser.h"
+#include "SimpleType.h"
+#include "../xmlparse/XMLElementNameToCamelCaseConverter.h"
 
 namespace tsgen {
   template<typename T>

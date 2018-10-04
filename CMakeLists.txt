@@ -15,34 +15,59 @@ endif ()
 
 add_executable(xsdToTypescript
         src/main.cpp
-        src/tsgen/typescript_module.cpp
-        src/tsgen/typescript_module.h
-        src/tsgen/typescript_module_factory.cpp
-        src/xmlparse/incorrect_xml_element_name_exception.cpp
-        src/xmlparse/incorrect_xml_element_name_exception.h
-        src/xmlparse/missing_xml_attribute_exception.cpp
-        src/xmlparse/missing_xml_attribute_exception.h
-        src/tsgen/simple_type.cpp
-        src/tsgen/simple_type.h
-        src/tsgen/typescript_primitive.h src/util/NotImplementedException.h src/xmlparse/xml_attribute_processor.cpp src/xmlparse/xml_attribute_processor.h src/xmlparse/xml_element_name_parser.cpp src/xmlparse/xml_element_name_parser.h src/xmlparse/XMLElement.h src/tsgen/typescript_module_factory.h src/xmlparse/XMLAttribute.h src/xmlparse/xml_element_imp.cpp src/xmlparse/xml_element_imp.h)
+        src/tsgen/TypescriptModule.cpp
+        src/tsgen/TypescriptModule.h
+        src/tsgen/TypescriptModuleFactory.cpp
+        src/xmlparse/IncorrectXMLElementNameException.cpp
+        src/xmlparse/IncorrectXMLElementNameException.h
+        src/xmlparse/MissingXMLAttributeException.cpp
+        src/xmlparse/MissingXMLAttributeException.h
+        src/tsgen/SimpleType.cpp
+        src/tsgen/SimpleType.h
+        src/tsgen/TypescriptPrimitive.h
+        src/util/NotImplementedException.h
+        src/xmlparse/XMLAttributeProcessor.cpp
+        src/xmlparse/XMLAttributeProcessor.h
+        src/xmlparse/XMLElementNameToCamelCaseConverter.cpp
+        src/xmlparse/XMLElementNameToCamelCaseConverter.h
+        src/xmlparse/XMLElement.h
+        src/tsgen/TypescriptModuleFactory.h
+        src/xmlparse/XMLAttribute.h
+        src/xmlparse/XMLElementImp.cpp
+        src/xmlparse/XMLElementImp.h
+        src/xmlparse/XMLAttributeImp.cpp
+        src/xmlparse/XMLAttributeImp.h)
 target_link_libraries(xsdToTypescript ${CONAN_LIBS})
 
 enable_testing()
 add_executable(runUnitTests
-        test/incorrect_xml_element_name_exception_test.cpp
-        src/xmlparse/incorrect_xml_element_name_exception.cpp
-        src/xmlparse/incorrect_xml_element_name_exception.h
-        test/typescript_module_builder_test.cpp
-        src/tsgen/typescript_module.cpp
-        src/tsgen/typescript_module.h
-        src/tsgen/typescript_module_factory.cpp
-        test/missing_xml_attribute_exception_test.cpp
-        src/xmlparse/missing_xml_attribute_exception.cpp
-        src/xmlparse/missing_xml_attribute_exception.h
-        test/simple_type_test.cpp
-        src/tsgen/simple_type.cpp
-        src/tsgen/simple_type.h
-        src/tsgen/typescript_primitive.h src/util/NotImplementedException.h src/xmlparse/xml_attribute_processor.cpp src/xmlparse/xml_attribute_processor.h src/xmlparse/xml_element_name_parser.cpp src/xmlparse/xml_element_name_parser.h test/mock_xml_element.h src/xmlparse/XMLElement.h src/tsgen/typescript_module_factory.h src/xmlparse/XMLAttribute.h src/xmlparse/xml_element_imp.cpp src/xmlparse/xml_element_imp.h)
+        test/IncorrectXMLElementNameExceptionTest.cpp
+        src/xmlparse/IncorrectXMLElementNameException.cpp
+        src/xmlparse/IncorrectXMLElementNameException.h
+        test/TypescriptModuleBuilderTest.cpp
+        src/tsgen/TypescriptModule.cpp
+        src/tsgen/TypescriptModule.h
+        src/tsgen/TypescriptModuleFactory.cpp
+        test/MissingXMLAttributeExceptionTest.cpp
+        src/xmlparse/MissingXMLAttributeException.cpp
+        src/xmlparse/MissingXMLAttributeException.h
+        test/SimpleTypeTest.cpp
+        src/tsgen/SimpleType.cpp
+        src/tsgen/SimpleType.h
+        src/tsgen/TypescriptPrimitive.h
+        src/util/NotImplementedException.h
+        src/xmlparse/XMLAttributeProcessor.cpp
+        src/xmlparse/XMLAttributeProcessor.h
+        src/xmlparse/XMLElementNameToCamelCaseConverter.cpp
+        src/xmlparse/XMLElementNameToCamelCaseConverter.h
+        test/MockXMLElement.h
+        src/xmlparse/XMLElement.h
+        src/tsgen/TypescriptModuleFactory.h
+        src/xmlparse/XMLAttribute.h
+        src/xmlparse/XMLElementImp.cpp
+        src/xmlparse/XMLElementImp.h
+        src/xmlparse/XMLAttributeImp.cpp
+        src/xmlparse/XMLAttributeImp.h test/MockXMLAttribute.h test/TypescriptModuleTest.cpp)
 target_link_libraries(runUnitTests ${CONAN_LIBS})
 add_test(runUnitTests runUnitTests)
 

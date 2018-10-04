@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "typescript_primitive.h"
+#include "TypescriptPrimitive.h"
 #include "../util/NotImplementedException.h"
 #include "../xmlparse/XMLElement.h"
 

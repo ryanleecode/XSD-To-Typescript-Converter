@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/xmlparse/missing_xml_attribute_exception.h"
+#include "../src/xmlparse/MissingXMLAttributeException.h"
 
 class MissingXMLAttributeExceptionTest : public ::testing::Test {
 protected:

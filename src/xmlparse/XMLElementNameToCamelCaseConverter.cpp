@@ -1,4 +1,4 @@
-#include "xml_element_name_parser.h"
+#include "XMLElementNameToCamelCaseConverter.h"
 
 xmlparse::XMLElementNameToCamelCaseConverter::XMLElementNameToCamelCaseConverter(
     const std::string &name

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <bits/unique_ptr.h>
-#include "typescript_module.h"
+#include "TypescriptModule.h"
 #include "../xmlparse/XMLElement.h"
 
 namespace tsgen {

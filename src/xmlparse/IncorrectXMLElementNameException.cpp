@@ -1,6 +1,6 @@
 #include <sstream>
 #include <cstring>
-#include "incorrect_xml_element_name_exception.h"
+#include "IncorrectXMLElementNameException.h"
 
 std::string xmlparse::IncorrectXMLElementNameException::getFoundElementName() const {
   return this->foundElementName_;

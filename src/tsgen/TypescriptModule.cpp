@@ -1,5 +1,5 @@
 #include <sstream>
-#include "typescript_module.h"
+#include "TypescriptModule.h"
 
 tsgen::TypeScriptModule::TypeScriptModule(
     const std::string &moduleName,

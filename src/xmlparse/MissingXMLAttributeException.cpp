@@ -1,5 +1,5 @@
 #include <cstring>
-#include "missing_xml_attribute_exception.h"
+#include "MissingXMLAttributeException.h"
 
 xmlparse::MissingXMLAttributeException::MissingXMLAttributeException(
     const std::string &expectedAttributeName) : runtime_error(

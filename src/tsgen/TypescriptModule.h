@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include "tinyxml2.h"
-#include "simple_type.h"
+#include "SimpleType.h"
 
 namespace tsgen {
   typedef std::map<std::string, std::unique_ptr<ISimpleType>> SimpleTypeMap;

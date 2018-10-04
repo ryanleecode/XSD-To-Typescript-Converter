@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "XMLElement.h"
 #include <memory>
 
 namespace xmlparse {

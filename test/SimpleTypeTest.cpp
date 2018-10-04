@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../src/tsgen/typescript_primitive.h"
-#include "../src/tsgen/simple_type.h"
+#include "../src/tsgen/TypescriptPrimitive.h"
+#include "../src/tsgen/SimpleType.h"
 
 class SimpleTypeTest : public ::testing::Test {
 protected:

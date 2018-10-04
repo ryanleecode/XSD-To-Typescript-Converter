@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/xmlparse/incorrect_xml_element_name_exception.h"
+#include "../src/xmlparse/IncorrectXMLElementNameException.h"
 
 class IncorrectXMLElementNameExceptionTest : public ::testing::Test {
 protected:
