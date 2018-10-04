@@ -4,6 +4,9 @@
 #include <tinyxml2.h>
 #include "SimpleType.h"
 #include "../xmlparse/XMLElementNameToCamelCaseConverter.h"
+#include "../xmlparse/MissingXMLAttributeException.h"
+
+const std::string NAME = "name";
 
 namespace tsgen {
   template<typename T>
@@ -11,8 +14,14 @@ namespace tsgen {
       const xmlparse::XMLElement &simpleTypeElement
   ) {
 
-    auto rawName = std::string(simpleTypeElement.findAttribute("name")->value());
+    auto nameAttr = simpleTypeElement.findAttribute(NAME);
+    if (nameAttr == nullptr) {
+      throw xmlparse::MissingXMLAttributeException(NAME);
+    }
+    auto rawName = std::string(nameAttr->value().value());
     this->name_ = xmlparse::XMLElementNameToCamelCaseConverter(rawName).getCamelCaseName();
+
+    auto restrictionElement = simpleTypeElement.firstChildElement();
   }
 
   template<typename T>

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <optional>
 #include <memory>
 
 namespace xmlparse {
@@ -7,6 +8,6 @@ namespace xmlparse {
   public:
     virtual ~XMLAttribute() = default;
 
-    virtual std::string value() const = 0;
+    virtual std::optional<std::string> value() const = 0;
   };
 }
