@@ -72,3 +72,7 @@ std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::nextSiblingEl
       *rawNextSibling);
 }
 
+bool xmlparse::XMLElementAdapter::hasValue() const {
+  return true;
+}
+

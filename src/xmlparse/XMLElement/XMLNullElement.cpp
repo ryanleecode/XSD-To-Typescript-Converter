@@ -24,3 +24,7 @@ std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLNullElement::nextSiblingEleme
 std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLNullElement::nextSiblingElement() const {
   return std::make_unique<xmlparse::XMLNullElement>();
 }
+
+bool xmlparse::XMLNullElement::hasValue() const {
+  return false;
+}

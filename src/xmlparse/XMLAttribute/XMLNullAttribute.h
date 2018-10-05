@@ -7,6 +7,8 @@ namespace xmlparse {
   public:
     XMLNullAttribute() = default;
 
+    bool hasValue() const override;
+
     std::optional<std::string> value() const override;
   };
 }

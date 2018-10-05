@@ -7,6 +7,8 @@ namespace xmlparse {
   public:
     XMLNullElement() = default;
 
+    bool hasValue() const override;
+
     std::optional<std::string> name() const override;
 
     std::unique_ptr<XMLElement> firstChildElement(const std::string &name) const override;

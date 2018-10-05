@@ -9,6 +9,8 @@ namespace xmlparse {
   public:
     XMLAttributeAdapter(const tinyxml2::XMLAttribute &xmlAttribute);
 
+    bool hasValue() const override;
+
     std::optional<std::string> value() const override;
 
   private:

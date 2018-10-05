@@ -26,7 +26,7 @@ namespace tsgen {
 
   protected:
     std::string name_;
-    TypescriptPrimitive type_;
+    std::string type_;
     std::unique_ptr<std::vector<T>> possibleValues_;
   };
 

@@ -24,9 +24,12 @@ namespace tsgen {
     auto restrictionElement = simpleTypeElement.firstChildElement("xs:restriction");
     auto restriction = restrictionElement->findAttribute("base");
     auto restrictionValue = restriction->value();
-/*    switch (restrictionValue) {
 
-    }*/
+    if (restrictionValue == "xs:string") {
+      this->type_ = "string";
+    } else {
+      this->type_ = "number";
+    }
   }
 
   template<typename T>
@@ -35,8 +38,7 @@ namespace tsgen {
     tsDefBuilder << "type "
                  << this->name_
                  << " = "
-                 << "string"
-                 /*               << (this->type_ == TypescriptPrimitive::STRING ? "string" : "number")*/
+                 << this->type_
                  << ";";
 
     return tsDefBuilder.str();

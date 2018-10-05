@@ -15,6 +15,10 @@ protected:
   xmlparse::XMLNullElement* xmlNullElement;
 };
 
+TEST_F (XMLNullElementTest, shouldNotHaveAValue) {
+  EXPECT_EQ(xmlNullElement->hasValue(), false);
+}
+
 TEST_F (XMLNullElementTest, nameShouldReturnNullOpt) {
   EXPECT_EQ(xmlNullElement->name(), std::nullopt);
 }

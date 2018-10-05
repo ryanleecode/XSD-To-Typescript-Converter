@@ -10,3 +10,7 @@ std::optional<std::string> xmlparse::XMLAttributeAdapter::value() const {
     ? std::optional(std::string(xmlAttribute_.Name()))
     : std::nullopt;
 }
+
+bool xmlparse::XMLAttributeAdapter::hasValue() const {
+  return true;
+}

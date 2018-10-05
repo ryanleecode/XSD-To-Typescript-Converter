@@ -30,7 +30,7 @@ TEST_F(SimpleTypeTest,
 }
 
 TEST_F(SimpleTypeTest,
-       ShouldGenerateABasicStringTypeCorrectly) {
+       ShouldGenerateABasicStringTypeFromXsString) {
   xmlparse::MockXMLElement mockXMLElement;
   EXPECT_CALL(mockXMLElement, findAttribute("name"))
       .Times(1)
@@ -47,6 +47,16 @@ TEST_F(SimpleTypeTest,
       .Times(1)
       .WillOnce([](const std::string &name) {
         auto restrictionElement = std::make_unique<xmlparse::MockXMLElement>();
+        EXPECT_CALL(*restrictionElement, findAttribute("base"))
+            .Times(1)
+            .WillOnce([](const std::string &name) {
+              auto baseAttr = std::make_unique<xmlparse::MockXMLAttribute>();
+              EXPECT_CALL(*baseAttr, value())
+                  .Times(1)
+                  .WillOnce(Return("xs:string"));
+
+              return std::move(baseAttr);
+            });
 
         return std::move(restrictionElement);
       });
@@ -58,7 +68,7 @@ TEST_F(SimpleTypeTest,
 }
 
 TEST_F(SimpleTypeTest,
-       ShouldGenerateABasicNumberTypeCorrectly) {
+       ShouldGenerateABasicNumberTypeFromXsNumber) {
   xmlparse::MockXMLElement mockXMLElement;
   EXPECT_CALL(mockXMLElement, findAttribute("name"))
       .Times(1)

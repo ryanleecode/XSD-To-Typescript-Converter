@@ -6,6 +6,8 @@
 namespace xmlparse {
   class MockXMLAttribute : public XMLAttribute {
   public:
+    MOCK_CONST_METHOD0(hasValue, bool());
+
     MOCK_CONST_METHOD0(value, std::optional<std::string>());
   };
 }

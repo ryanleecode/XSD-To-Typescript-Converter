@@ -8,6 +8,8 @@ namespace xmlparse {
   public:
     virtual ~XMLAttribute() = default;
 
+    virtual bool hasValue() const = 0;
+
     virtual std::optional<std::string> value() const = 0;
   };
 }
