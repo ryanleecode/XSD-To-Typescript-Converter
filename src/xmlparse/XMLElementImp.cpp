@@ -6,11 +6,13 @@ xmlparse::XMLElementImp::XMLElementImp(
 ) : xmlElement_(xmlElement) {
 }
 
-std::string xmlparse::XMLElementImp::name() const {
-  return xmlElement_.Name() == nullptr ? std::string() : xmlElement_.Name();
+std::optional<std::string> xmlparse::XMLElementImp::name() const {
+  return xmlElement_.Name()
+    ? std::optional(std::string(xmlElement_.Name()))
+    : std::nullopt;
 }
 
-std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement(
+std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement(
     const std::string &name
 ) const {
 
@@ -20,10 +22,10 @@ std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement
     return nullptr;
   }
 
-  return std::make_shared<xmlparse::XMLElementImp>(*rawXMLElement);
+  return std::make_unique<xmlparse::XMLElementImp>(*rawXMLElement);
 }
 
-std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement(
+std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement(
     const std::string &name
 ) {
   const auto rawXMLElement = xmlElement_.FirstChildElement(name.c_str());
@@ -32,10 +34,10 @@ std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement
     return nullptr;
   }
 
-  return std::make_shared<xmlparse::XMLElementImp>(*rawXMLElement);
+  return std::make_unique<xmlparse::XMLElementImp>(*rawXMLElement);
 }
 
-std::shared_ptr<xmlparse::XMLAttribute> xmlparse::XMLElementImp::findAttribute(
+std::unique_ptr<xmlparse::XMLAttribute> xmlparse::XMLElementImp::findAttribute(
     const std::string &name
 ) const {
   auto rawAttribute = xmlElement_.FindAttribute(name.c_str());
@@ -44,10 +46,10 @@ std::shared_ptr<xmlparse::XMLAttribute> xmlparse::XMLElementImp::findAttribute(
     return nullptr;
   }
 
-  return std::make_shared<xmlparse::XMLAttributeImp>(*rawAttribute);
+  return std::make_unique<xmlparse::XMLAttributeImp>(*rawAttribute);
 }
 
-std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::nextSiblingElement(
+std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::nextSiblingElement(
     const std::string &name
 ) const {
   auto rawSibling = xmlElement_.NextSiblingElement(name.c_str());
@@ -56,37 +58,37 @@ std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::nextSiblingElemen
     return nullptr;
   }
 
-  return std::make_shared<xmlparse::XMLElementImp>(*rawSibling);
+  return std::make_unique<xmlparse::XMLElementImp>(*rawSibling);
 }
 
-std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement() const {
+std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement() const {
   auto rawFirstChild = xmlElement_.FirstChildElement();
 
   if (rawFirstChild == nullptr) {
     return nullptr;
   }
 
-  return std::make_shared<xmlparse::XMLElementImp>(*rawFirstChild);
+  return std::make_unique<xmlparse::XMLElementImp>(*rawFirstChild);
 }
 
-std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement() {
+std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::firstChildElement() {
   auto rawFirstChild = xmlElement_.FirstChildElement();
 
   if (rawFirstChild == nullptr) {
     return nullptr;
   }
 
-  return std::make_shared<xmlparse::XMLElementImp>(*rawFirstChild);
+  return std::make_unique<xmlparse::XMLElementImp>(*rawFirstChild);
 }
 
-std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::nextSiblingElement() const {
+std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementImp::nextSiblingElement() const {
   auto rawNextSibling = xmlElement_.NextSiblingElement();
 
   if (rawNextSibling == nullptr) {
     return nullptr;
   }
 
-  return std::make_shared<xmlparse::XMLElementImp>(
+  return std::make_unique<xmlparse::XMLElementImp>(
       *rawNextSibling);
 }
 

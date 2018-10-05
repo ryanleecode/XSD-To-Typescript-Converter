@@ -8,7 +8,7 @@ namespace xmlparse {
   public:
     XMLAttributeImp(const tinyxml2::XMLAttribute& xmlAttribute);
 
-    std::string value() const override;
+    std::optional<std::string> value() const override;
 
   private:
     const tinyxml2::XMLAttribute& xmlAttribute_;
