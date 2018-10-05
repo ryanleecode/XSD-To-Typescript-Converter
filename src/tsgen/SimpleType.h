@@ -5,7 +5,7 @@
 #include <memory>
 #include "TypescriptPrimitive.h"
 #include "../util/NotImplementedException.h"
-#include "../xmlparse/XMLElement.h"
+#include "../xmlparse/XMLElement/XMLElement.h"
 
 namespace tsgen {
   class ISimpleType {

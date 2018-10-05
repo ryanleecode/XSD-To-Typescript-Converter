@@ -2,7 +2,7 @@
 
 #include <string>
 #include <memory>
-#include "XMLAttribute.h"
+#include "../XMLAttribute/XMLAttribute.h"
 
 namespace xmlparse {
   class XMLElement {
@@ -14,10 +14,6 @@ namespace xmlparse {
     virtual std::unique_ptr<XMLElement> firstChildElement() const = 0;
 
     virtual std::unique_ptr<XMLElement> firstChildElement(const std::string &name) const = 0;
-
-    virtual std::unique_ptr<XMLElement> firstChildElement() = 0;
-
-    virtual std::unique_ptr<XMLElement> firstChildElement(const std::string &name) = 0;
 
     virtual std::unique_ptr<XMLAttribute> findAttribute(const std::string &name) const = 0;
 

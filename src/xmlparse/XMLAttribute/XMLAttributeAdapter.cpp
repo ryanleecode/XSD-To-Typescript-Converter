@@ -1,11 +1,11 @@
-#include "XMLAttributeImp.h"
+#include "XMLAttributeAdapter.h"
 
-xmlparse::XMLAttributeImp::XMLAttributeImp(
+xmlparse::XMLAttributeAdapter::XMLAttributeAdapter(
     const tinyxml2::XMLAttribute &xmlAttribute
 ) : xmlAttribute_(xmlAttribute) {
 }
 
-std::optional<std::string> xmlparse::XMLAttributeImp::value() const {
+std::optional<std::string> xmlparse::XMLAttributeAdapter::value() const {
   return xmlAttribute_.Name()
     ? std::optional(std::string(xmlAttribute_.Name()))
     : std::nullopt;

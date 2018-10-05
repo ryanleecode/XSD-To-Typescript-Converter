@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gmock/gmock.h"
-#include "../src/xmlparse/XMLAttribute.h"
+#include "../../../src/xmlparse/XMLAttribute/XMLAttribute.h"
 
 namespace xmlparse {
   class MockXMLAttribute : public XMLAttribute {

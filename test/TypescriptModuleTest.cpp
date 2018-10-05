@@ -4,10 +4,10 @@
 #include "../src/xmlparse/IncorrectXMLElementNameException.h"
 #include "../src/xmlparse/MissingXMLAttributeException.h"
 #include "../src/tsgen/TypescriptModuleFactory.h"
-#include "MockXMLElement.h"
-#include "MockXMLAttribute.h"
-#include "../src/xmlparse/XMLAttributeImp.h"
-#include "../src/xmlparse/XMLElementImp.h"
+#include "xmlparse/mocks/MockXMLElement.h"
+#include "xmlparse/mocks/MockXMLAttribute.h"
+#include "../src/xmlparse/XMLAttribute/XMLAttributeAdapter.h"
+#include "../src/xmlparse/XMLElement/XMLElementAdapter.h"
 
 class TypescriptModuleTest : public ::testing::Test {
 protected:
@@ -44,7 +44,7 @@ auto xmlString = R"(
 document->Parse(xmlString);
 
 auto typescriptModule = typeScriptModuleFactory
-    ->createTypescriptModule(xmlparse::XMLElementImp(*document->RootElement()));
+    ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
 
 auto expectedDefinition = R"(/* tslint:disable */
 export type UserId = string;
@@ -72,7 +72,7 @@ auto xmlString = R"(
 document->Parse(xmlString);
 
 auto typescriptModule = typeScriptModuleFactory
-    ->createTypescriptModule(xmlparse::XMLElementImp(*document->RootElement()));
+    ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
 
 auto expectedDefinition = R"(/* tslint:disable */
 export type NumberType = 0 | 1 | 2 | 3;

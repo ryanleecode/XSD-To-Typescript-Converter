@@ -4,10 +4,10 @@
 #include "../src/xmlparse/IncorrectXMLElementNameException.h"
 #include "../src/xmlparse/MissingXMLAttributeException.h"
 #include "../src/tsgen/TypescriptModuleFactory.h"
-#include "MockXMLElement.h"
-#include "MockXMLAttribute.h"
-#include "../src/xmlparse/XMLAttributeImp.h"
-#include "../src/xmlparse/XMLElementImp.h"
+#include "xmlparse/mocks/MockXMLElement.h"
+#include "xmlparse/mocks/MockXMLAttribute.h"
+#include "../src/xmlparse/XMLAttribute/XMLAttributeAdapter.h"
+#include "../src/xmlparse/XMLElement/XMLElementAdapter.h"
 
 using ::testing::AtLeast;
 using ::testing::Return;

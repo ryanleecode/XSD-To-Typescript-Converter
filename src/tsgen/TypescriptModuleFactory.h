@@ -2,7 +2,7 @@
 
 #include <bits/unique_ptr.h>
 #include "TypescriptModule.h"
-#include "../xmlparse/XMLElement.h"
+#include "../xmlparse/XMLElement/XMLElement.h"
 
 namespace tsgen {
   class TypeScriptModuleFactory {

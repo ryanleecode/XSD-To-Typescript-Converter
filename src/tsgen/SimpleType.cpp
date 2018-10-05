@@ -21,7 +21,12 @@ namespace tsgen {
     auto rawName = std::string(nameAttr->value().value());
     this->name_ = xmlparse::XMLElementNameToCamelCaseConverter(rawName).getCamelCaseName();
 
-    auto restrictionElement = simpleTypeElement.firstChildElement();
+    auto restrictionElement = simpleTypeElement.firstChildElement("xs:restriction");
+    auto restriction = restrictionElement->findAttribute("base");
+    auto restrictionValue = restriction->value();
+/*    switch (restrictionValue) {
+
+    }*/
   }
 
   template<typename T>
@@ -30,7 +35,8 @@ namespace tsgen {
     tsDefBuilder << "type "
                  << this->name_
                  << " = "
-                 << (this->type_ == TypescriptPrimitive::STRING ? "string" : "number")
+                 << "string"
+                 /*               << (this->type_ == TypescriptPrimitive::STRING ? "string" : "number")*/
                  << ";";
 
     return tsDefBuilder.str();
