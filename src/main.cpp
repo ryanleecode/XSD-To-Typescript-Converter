@@ -1,9 +1,7 @@
 #include <iostream>
-#include "tinyxml2.h"
-#include "tsgen/TypescriptModule.h"
-#include "xmlparse/IncorrectXMLElementNameException.h"
-#include "tsgen/TypescriptModuleFactory.h"
-#include "xmlparse/XMLElement/XMLElementAdapter.h"
+#include <tinyxml2.h>
+#include <XMLElementAdapter.h>
+#include <TypescriptModuleFactory.h>
 
 int main(int argc, char const *argv[]) {
 /*
@@ -32,7 +30,7 @@ int main(int argc, char const *argv[]) {
 */
   tinyxml2::XMLDocument doc;
   doc.LoadFile("Elements.xsd");
-  auto tsModule = tsgen::TypeScriptModuleFactory().createTypescriptModule(
+  auto tsModule = tsgen::TypescriptModuleFactory().createTypescriptModule(
       xmlparse::XMLElementAdapter(*doc.RootElement()));
   return 0;
 }
