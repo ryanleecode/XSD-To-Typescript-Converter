@@ -22,7 +22,5 @@ namespace tsgen {
   private:
     std::string moduleName_;
     std::unique_ptr<SimpleTypes> simpleTypes_;
-
-    friend class TypescriptModuleFactory;
   };
 }
