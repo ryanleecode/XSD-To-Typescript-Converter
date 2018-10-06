@@ -12,26 +12,22 @@ protected:
 
 TEST_F(StringRestrictionHandlerTest, shouldHandleAStringType) {
   std::string restriction;
-  tsgen::RestrictionUnion restrictionUnion;
-  tsgen::StringRestrictionHandler handler(restriction, restrictionUnion);
+  tsgen::StringRestrictionHandler handler(restriction);
   std::string base = "xs:string";
-  std::vector<tsgen::RestrictionPair> restrictionPairs;
+  tsgen::RestrictionPairs restrictionPairs;
 
   handler.handle(base, restrictionPairs);
 
   EXPECT_EQ(restriction, "string");
-  EXPECT_EQ(restrictionPairs.size(), 0);
 }
 
 TEST_F(StringRestrictionHandlerTest, shouldIgnoreNonStringTypes) {
   std::string restriction;
-  tsgen::RestrictionUnion restrictionUnion;
-  tsgen::StringRestrictionHandler handler(restriction, restrictionUnion);
+  tsgen::StringRestrictionHandler handler(restriction);
   std::string base = "xs:int";
-  std::vector<tsgen::RestrictionPair> restrictionPairs;
+  tsgen::RestrictionPairs restrictionPairs;
 
   handler.handle(base, restrictionPairs);
 
   EXPECT_EQ(restriction, "");
-  EXPECT_EQ(restrictionPairs.size(), 0);
 }

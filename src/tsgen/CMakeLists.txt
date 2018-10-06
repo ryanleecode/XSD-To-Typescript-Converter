@@ -12,7 +12,7 @@ add_library(tsgen
         "src/SimpleTypeImp.cpp"
         "src/restrictions/StringRestrictionHandler.cpp"
         "src/restrictions/NumberRestrictionHandler.cpp"
-        "src/TypescriptModuleImp.cpp")
+        "src/TypescriptModuleImp.cpp" src/restrictions/RestrictionHandler.h src/restrictions/RestrictionHandler.cpp)
 
 target_include_directories(tsgen
         PUBLIC

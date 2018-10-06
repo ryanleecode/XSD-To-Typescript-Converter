@@ -4,6 +4,7 @@
 #include <XMLElement.h>
 #include <MissingXMLAttributeException.h>
 #include <XMLElementNameToCamelCaseConverter.h>
+#include <restrictions/NumberRestrictionHandler.h>
 #include "SimpleTypeImp.h"
 #include "restrictions/StringRestrictionHandler.h"
 
@@ -27,11 +28,26 @@ namespace tsgen {
     auto restrictionValue = restriction->value();
     auto base = restrictionValue.value();
 
-    StringRestrictionHandler(this->type_, this->possibleValues_)
-        .handle(base, std::vector<RestrictionPair>());
-    if (base == "xs:int") {
-      this->type_ = "number";
+    auto restrictionPairs = RestrictionPairs();
+    auto restrictionDefinitionElement = restrictionElement->firstChildElement();
+    while (restrictionDefinitionElement->hasValue()) {
+      auto restrictionDefinitionName = restrictionDefinitionElement->name();
+      auto restrictionDefinitionValueElement =
+          restrictionDefinitionElement->findAttribute("value");
+      auto restrictionDefinitionValue = restrictionDefinitionValueElement->value();
+
+      if (restrictionDefinitionValue.has_value()) {
+        restrictionPairs.insert(
+            {restrictionDefinitionName.value(), restrictionDefinitionValue.value()}
+        );
+        restrictionDefinitionElement = restrictionDefinitionElement->nextSiblingElement();
+      }
     }
+
+    StringRestrictionHandler(this->type_)
+        .handle(base, restrictionPairs);
+    NumberRestrictionHandler(this->type_)
+        .handle(base, restrictionPairs);
   }
 
   std::string SimpleTypeImp::toTypescriptDefinition() const {

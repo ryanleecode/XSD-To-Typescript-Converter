@@ -59,6 +59,30 @@ export type NumberType = number;
 }
 
 TEST_F(TypescriptModuleImpTest,
+       ShouldProperlyGenerateMinMaxNumberTypes) {
+  auto xmlString = R"(
+    <?xml version="1.0"encoding="UTF-8"?>
+    <xs:schema xmlns="simple-types">
+      <xs:simpleType name="number-type">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="-3" />
+            <xs:maxInclusive value="4" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  )";
+  document->Parse(xmlString);
+
+  auto typescriptModule = typeScriptModuleFactory
+      ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
+
+  auto expectedDefinition = R"(/* tslint:disable */
+export type NumberType = -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4;
+)";
+  ASSERT_STRCASEEQ(typescriptModule->generateTypescriptSchema().c_str(), expectedDefinition);
+}
+
+TEST_F(TypescriptModuleImpTest,
        ShouldProperlyGenerateEnumerationNumberTypes) {
   auto xmlString = R"(
     <?xml version="1.0"encoding="UTF-8"?>

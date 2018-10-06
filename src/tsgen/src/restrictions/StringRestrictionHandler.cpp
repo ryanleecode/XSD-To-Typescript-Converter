@@ -2,18 +2,16 @@
 
 namespace tsgen {
   StringRestrictionHandler::StringRestrictionHandler(
-      std::string &restriction,
-      const RestrictionUnion &restrictionUnion
-  ): restriction_(restriction), restrictionUnion_(restrictionUnion) {
+      std::string &restriction
+  ) : RestrictionHandler(restriction) {
   }
-
 
   void  StringRestrictionHandler::handle(
       const std::string &base,
-      const std::vector<RestrictionPair> &restrictionPairs
+      const RestrictionPairs &restrictionPairs
   ) {
     if (base == "xs:string") {
-      this->restriction_ = "string";
+      this->typeString_ = "string";
     }
   }
 }

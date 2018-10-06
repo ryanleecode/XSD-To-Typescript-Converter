@@ -4,24 +4,20 @@
 #include <vector>
 #include <memory>
 #include <set>
+#include "RestrictionHandler.h"
 
 namespace tsgen {
-  typedef std::pair<std::string, std::string> RestrictionPair;
-  typedef std::set<std::string> RestrictionUnion;
-
-  class StringRestrictionHandler {
+  class StringRestrictionHandler : public RestrictionHandler {
   public:
-    StringRestrictionHandler(
-        std::string &restriction,
-        const RestrictionUnion &restrictionUnion);
+    explicit StringRestrictionHandler(std::string &restriction);
 
     void handle(
         const std::string &base,
-        const std::vector<RestrictionPair> &restrictionPairs);
+        const RestrictionPairs &restrictionPairs) override;
 
   private:
-    std::string &restriction_;
-    const std::set<std::string> &restrictionUnion_;
+    typedef std::set<std::string> RestrictionUnion;
+    RestrictionUnion restrictionUnion_;
   };
 }
 

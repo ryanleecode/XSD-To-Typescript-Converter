@@ -4,7 +4,7 @@ add_executable(tsgen_test
         "src/SimpleTypeImpTest.cpp"
         "src/restrictions/StringRestrictionHandlerTest.cpp"
         "src/mocks/MockXMLElement.h"
-        "src/mocks/MockXMLAttribute.h" src/mocks/MockSimpleType.h)
+        "src/mocks/MockXMLAttribute.h" src/mocks/MockSimpleType.h src/restrictions/NumberRestrictionHandlerTest.cpp)
 
 target_link_libraries(tsgen_test
         PRIVATE

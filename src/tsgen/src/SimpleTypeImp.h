@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <set>
+#include <unordered_set>
 #include "TypescriptPrimitive.h"
 #include "SimpleType.h"
 #include <XMLElement.h>
@@ -18,7 +18,6 @@ namespace tsgen {
   protected:
     std::string name_;
     std::string type_;
-    const std::set<std::string> possibleValues_;
   };
 }
 
