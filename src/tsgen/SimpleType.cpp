@@ -5,12 +5,12 @@
 #include "SimpleType.h"
 #include "../xmlparse/XMLElementNameToCamelCaseConverter.h"
 #include "../xmlparse/MissingXMLAttributeException.h"
+#include "restrictions/StringRestrictionHandler.h"
 
 const std::string NAME = "name";
 
 namespace tsgen {
-  template<typename T>
-  SimpleType<T>::SimpleType(
+  SimpleType::SimpleType(
       const xmlparse::XMLElement &simpleTypeElement
   ) {
 
@@ -24,16 +24,16 @@ namespace tsgen {
     auto restrictionElement = simpleTypeElement.firstChildElement("xs:restriction");
     auto restriction = restrictionElement->findAttribute("base");
     auto restrictionValue = restriction->value();
+    auto base = restrictionValue.value();
 
-    if (restrictionValue == "xs:string") {
-      this->type_ = "string";
-    } else {
+    StringRestrictionHandler(this->type_, this->possibleValues_)
+        .handle(base, std::vector<RestrictionPair>());
+    if (base == "xs:int") {
       this->type_ = "number";
     }
   }
 
-  template<typename T>
-  std::string SimpleType<T>::toTypescriptDefinition() const {
+  std::string SimpleType::toTypescriptDefinition() const {
     std::stringstream tsDefBuilder;
     tsDefBuilder << "type "
                  << this->name_

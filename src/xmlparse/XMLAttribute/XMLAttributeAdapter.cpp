@@ -6,8 +6,8 @@ xmlparse::XMLAttributeAdapter::XMLAttributeAdapter(
 }
 
 std::optional<std::string> xmlparse::XMLAttributeAdapter::value() const {
-  return xmlAttribute_.Name()
-    ? std::optional(std::string(xmlAttribute_.Name()))
+  return xmlAttribute_.Value()
+         ? std::optional(std::string(xmlAttribute_.Value()))
     : std::nullopt;
 }
 

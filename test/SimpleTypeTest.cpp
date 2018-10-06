@@ -25,7 +25,7 @@ TEST_F(SimpleTypeTest,
   EXPECT_CALL(mockXMLElement, findAttribute("name"))
       .Times(1);
 
-  EXPECT_THROW(tsgen::SimpleType<std::string>{mockXMLElement},
+  EXPECT_THROW(tsgen::SimpleType{mockXMLElement},
                xmlparse::MissingXMLAttributeException);
 }
 
@@ -61,7 +61,7 @@ TEST_F(SimpleTypeTest,
         return std::move(restrictionElement);
       });
 
-  tsgen::SimpleType<std::string> simpleStringType(mockXMLElement);
+  tsgen::SimpleType simpleStringType(mockXMLElement);
 
   auto expectedString = "type UserId = string;";
   ASSERT_STRCASEEQ(simpleStringType.toTypescriptDefinition().c_str(), expectedString);
@@ -101,7 +101,7 @@ TEST_F(SimpleTypeTest,
       });
 
 
-  tsgen::SimpleType<int> simpleType(mockXMLElement);
+  tsgen::SimpleType simpleType(mockXMLElement);
 
   auto expectedString = "type AppleCount = number;";
   ASSERT_STRCASEEQ(simpleType.toTypescriptDefinition().c_str(), expectedString);

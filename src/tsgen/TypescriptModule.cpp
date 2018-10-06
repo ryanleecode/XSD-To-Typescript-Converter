@@ -3,7 +3,7 @@
 
 tsgen::TypeScriptModule::TypeScriptModule(
     const std::string &moduleName,
-    std::unique_ptr<SimpleTypeMap> simpleTypes
+    std::unique_ptr<SimpleTypes> simpleTypes
 ) : moduleName_(moduleName), simpleTypes_(std::move(simpleTypes)) {
 }
 

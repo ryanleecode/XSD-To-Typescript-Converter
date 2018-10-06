@@ -20,26 +20,23 @@ namespace tsgen {
 
     auto requiredNameAttr = xmlElement.findAttribute(requiredAttributeName);
 
-    auto simpleTypes = std::make_unique<SimpleTypeMap>();
+    auto simpleTypes = std::make_unique<SimpleTypes>();
 
     auto currentElement = xmlElement.firstChildElement();
-    while (currentElement != nullptr) {
+    while (currentElement->hasValue()) {
       if (std::string(currentElement->name().value()) == "xs:simpleType") {
         auto name = currentElement->findAttribute("name")->value();
-/*        auto type = std::string(currentElement
-                                    ->firstChildElement("xs:restriction")
-                                    ->findAttribute("base")
-                                    ->value());*/
-        simpleTypes->insert(std::pair<OptString, UniqueSimpleType>(
+        simpleTypes->push_back(SimpleTypePair(
             std::optional(name),
-            std::unique_ptr<ISimpleType>(new SimpleType<std::string>(*currentElement))
+            std::make_unique<SimpleType>(*currentElement)
         ));
       }
       currentElement = currentElement->nextSiblingElement();
     }
 
+    auto tsModuleName = requiredNameAttr->value().value();
     return std::unique_ptr<TypeScriptModule>(
-        new TypeScriptModule(requiredNameAttr->value().value(), std::move(simpleTypes)));
+        new TypeScriptModule(tsModuleName, std::move(simpleTypes)));
   }
 
   void TypeScriptModuleFactory::checkIfElementHasXsSchemaName(
@@ -59,7 +56,7 @@ namespace tsgen {
       const xmlparse::XMLElement &xmlElement
   ) const {
 
-    if (xmlElement.findAttribute(requiredAttributeName) == nullptr) {
+    if (!xmlElement.findAttribute(requiredAttributeName)->hasValue()) {
       throw xmlparse::MissingXMLAttributeException(requiredAttributeName);
     }
   }

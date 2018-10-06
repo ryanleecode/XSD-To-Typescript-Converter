@@ -8,7 +8,8 @@
 
 namespace tsgen {
   typedef std::optional<std::string> OptString;
-  typedef std::map<OptString, std::unique_ptr<ISimpleType>> SimpleTypeMap;
+  typedef std::pair<OptString, std::unique_ptr<ISimpleType>> SimpleTypePair;
+  typedef std::vector<SimpleTypePair> SimpleTypes;
 
   class TypeScriptModule {
   public:
@@ -19,10 +20,10 @@ namespace tsgen {
   private:
     explicit TypeScriptModule(
         const std::string &moduleName,
-        std::unique_ptr<SimpleTypeMap> simpleTypes);
+        std::unique_ptr<SimpleTypes> simpleTypes);
 
     std::string moduleName_;
-    std::unique_ptr<SimpleTypeMap> simpleTypes_;
+    std::unique_ptr<SimpleTypes> simpleTypes_;
 
     friend class TypeScriptModuleFactory;
   };

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <set>
 #include "TypescriptPrimitive.h"
 #include "../util/NotImplementedException.h"
 #include "../xmlparse/XMLElement/XMLElement.h"
@@ -17,24 +18,17 @@ namespace tsgen {
     };
   };
 
-  template<typename T>
   class SimpleType : public ISimpleType {
   public:
-    SimpleType(const xmlparse::XMLElement &simpleTypeElement);
+    explicit SimpleType(const xmlparse::XMLElement &simpleTypeElement);
 
     std::string toTypescriptDefinition() const override;
 
   protected:
     std::string name_;
     std::string type_;
-    std::unique_ptr<std::vector<T>> possibleValues_;
+    const std::set<std::string> possibleValues_;
   };
-
-  template
-  class SimpleType<std::string>;
-
-  template
-  class SimpleType<int>;
 }
 
 

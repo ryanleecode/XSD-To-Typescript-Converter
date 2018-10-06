@@ -36,7 +36,7 @@ add_executable(xsdToTypescript
         src/xmlparse/XMLElement/XMLElementAdapter.cpp
         src/xmlparse/XMLElement/XMLElementAdapter.h
         src/xmlparse/XMLAttribute/XMLAttributeAdapter.cpp
-        src/xmlparse/XMLAttribute/XMLAttributeAdapter.h src/xmlparse/XMLElement/XMLNullElement.cpp src/xmlparse/XMLElement/XMLNullElement.h src/xmlparse/XMLAttribute/XMLNullAttribute.cpp src/xmlparse/XMLAttribute/XMLNullAttribute.h)
+        src/xmlparse/XMLAttribute/XMLAttributeAdapter.h src/xmlparse/XMLElement/XMLNullElement.cpp src/xmlparse/XMLElement/XMLNullElement.h src/xmlparse/XMLAttribute/XMLNullAttribute.cpp src/xmlparse/XMLAttribute/XMLNullAttribute.h src/tsgen/restrictions/StringRestrictionHandler.cpp src/tsgen/restrictions/StringRestrictionHandler.h src/tsgen/restrictions/NumberRestrictionHandler.cpp src/tsgen/restrictions/NumberRestrictionHandler.h)
 target_link_libraries(xsdToTypescript ${CONAN_LIBS})
 
 enable_testing()
@@ -67,7 +67,7 @@ add_executable(runUnitTests
         src/xmlparse/XMLElement/XMLElementAdapter.cpp
         src/xmlparse/XMLElement/XMLElementAdapter.h
         src/xmlparse/XMLAttribute/XMLAttributeAdapter.cpp
-        src/xmlparse/XMLAttribute/XMLAttributeAdapter.h test/xmlparse/mocks/MockXMLAttribute.h test/TypescriptModuleTest.cpp src/xmlparse/XMLElement/XMLNullElement.cpp src/xmlparse/XMLElement/XMLNullElement.h test/xmlparse/XMLNullElementTest.cpp src/xmlparse/XMLAttribute/XMLNullAttribute.cpp src/xmlparse/XMLAttribute/XMLNullAttribute.h test/xmlparse/XMLNullAttributeTest.cpp)
+        src/xmlparse/XMLAttribute/XMLAttributeAdapter.h test/xmlparse/mocks/MockXMLAttribute.h test/TypescriptModuleTest.cpp src/xmlparse/XMLElement/XMLNullElement.cpp src/xmlparse/XMLElement/XMLNullElement.h test/xmlparse/XMLNullElementTest.cpp src/xmlparse/XMLAttribute/XMLNullAttribute.cpp src/xmlparse/XMLAttribute/XMLNullAttribute.h test/xmlparse/XMLNullAttributeTest.cpp src/tsgen/restrictions/StringRestrictionHandler.cpp src/tsgen/restrictions/StringRestrictionHandler.h test/xmlparse/restrictions/StringRestrictionHandlerTest.cpp src/tsgen/restrictions/NumberRestrictionHandler.cpp src/tsgen/restrictions/NumberRestrictionHandler.h)
 target_link_libraries(runUnitTests ${CONAN_LIBS})
 add_test(runUnitTests runUnitTests)
 

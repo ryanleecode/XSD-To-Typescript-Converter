@@ -26,8 +26,8 @@ protected:
 };
 
 TEST_F(TypescriptModuleTest,
-    ShouldProperlyGenerateStringType) {
-auto xmlString = R"(
+       ShouldProperlyGenerateStringType) {
+  auto xmlString = R"(
     <?xml version="1.0"encoding="UTF-8"?>
     <xs:schema xmlns="simple-types">
       <xs:simpleType name="user-id">
@@ -41,22 +41,22 @@ auto xmlString = R"(
       </xs:simpleType>
     </xs:schema>
   )";
-document->Parse(xmlString);
+  document->Parse(xmlString);
 
-auto typescriptModule = typeScriptModuleFactory
-    ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
+  auto typescriptModule = typeScriptModuleFactory
+      ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
 
-auto expectedDefinition = R"(/* tslint:disable */
+  auto expectedDefinition = R"(/* tslint:disable */
 export type UserId = string;
 export type NumberType = number;
 )";
-ASSERT_STRCASEEQ(
-    typescriptModule->generateTypescriptSchema().c_str(), expectedDefinition);
+  ASSERT_STRCASEEQ(
+      typescriptModule->generateTypescriptSchema().c_str(), expectedDefinition);
 }
 
 TEST_F(TypescriptModuleTest,
-    ShouldProperlyGenerateEnumerationNumberTypes) {
-auto xmlString = R"(
+       ShouldProperlyGenerateEnumerationNumberTypes) {
+  auto xmlString = R"(
     <?xml version="1.0"encoding="UTF-8"?>
     <xs:schema xmlns="simple-types">
       <xs:simpleType name="number-type">
@@ -69,13 +69,13 @@ auto xmlString = R"(
       </xs:simpleType>
     </xs:schema>
   )";
-document->Parse(xmlString);
+  document->Parse(xmlString);
 
-auto typescriptModule = typeScriptModuleFactory
-    ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
+  auto typescriptModule = typeScriptModuleFactory
+      ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
 
-auto expectedDefinition = R"(/* tslint:disable */
+  auto expectedDefinition = R"(/* tslint:disable */
 export type NumberType = 0 | 1 | 2 | 3;
 )";
-ASSERT_STRCASEEQ(typescriptModule->generateTypescriptSchema().c_str(), expectedDefinition);
+  ASSERT_STRCASEEQ(typescriptModule->generateTypescriptSchema().c_str(), expectedDefinition);
 }
