@@ -6,6 +6,7 @@
 #include <set>
 #include "TypescriptPrimitive.h"
 #include "SimpleType.h"
+#include <XMLElement.h>
 
 namespace tsgen {
   class SimpleTypeImp : public SimpleType {

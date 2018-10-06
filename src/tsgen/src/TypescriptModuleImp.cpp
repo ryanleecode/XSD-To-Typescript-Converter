@@ -15,9 +15,8 @@ std::string tsgen::TypescriptModuleImp::generateTypescriptSchema() {
   std::stringstream typescriptSchema;
   typescriptSchema << "/* tslint:disable */\n";
   for (const auto &simpleType : *this->simpleTypes_) {
-    auto &value = simpleType.second;
     typescriptSchema << "export "
-                     << value->toTypescriptDefinition()
+                     << simpleType->toTypescriptDefinition()
                      << "\n";
   }
   return typescriptSchema.str();

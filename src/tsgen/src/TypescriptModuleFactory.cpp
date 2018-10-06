@@ -29,10 +29,7 @@ namespace tsgen {
     while (currentElement->hasValue()) {
       if (std::string(currentElement->name().value()) == "xs:simpleType") {
         auto name = currentElement->findAttribute("name")->value();
-        simpleTypes->push_back(SimpleTypePair(
-            std::optional(name),
-            std::make_unique<SimpleTypeImp>(*currentElement)
-        ));
+        simpleTypes->push_back(std::make_unique<SimpleTypeImp>(*currentElement));
       }
       currentElement = currentElement->nextSiblingElement();
     }

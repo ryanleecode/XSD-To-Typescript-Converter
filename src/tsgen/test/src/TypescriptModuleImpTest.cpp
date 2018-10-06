@@ -1,9 +1,16 @@
 #include <gtest/gtest.h>
+#include <memory.h>
+#include "../../src/TypescriptModuleImp.h"
+#include "mocks/MockSimpleType.h"
 #include <TypescriptModuleFactory.h>
 #include <tinyxml2.h>
 #include <XMLElementAdapter.h>
 
-class TypescriptModuleTest : public ::testing::Test {
+using ::testing::Return;
+
+typedef std::vector<std::unique_ptr<tsgen::SimpleType>> SimpleTypes;
+
+class TypescriptModuleImpTest : public ::testing::Test {
 protected:
   void SetUp() override {
     this->typeScriptModuleFactory = new tsgen::TypescriptModuleFactory();
@@ -15,40 +22,43 @@ protected:
     delete document;
   }
 
+  std::unique_ptr<tsgen::MockSimpleType> createMockSimpleType(
+      const std::string &returnValue
+  ) {
+    auto simpleType = std::make_unique<tsgen::MockSimpleType>();
+    EXPECT_CALL(*simpleType, toTypescriptDefinition())
+        .Times(1)
+        .WillOnce(Return(returnValue));
+
+    return std::move(simpleType);
+  }
+
   tinyxml2::XMLDocument *document{};
   tsgen::TypescriptModuleFactory *typeScriptModuleFactory{};
 };
 
-TEST_F(TypescriptModuleTest,
+TEST_F(TypescriptModuleImpTest,
        ShouldProperlyGenerateStringType) {
-  auto xmlString = R"(
-    <?xml version="1.0"encoding="UTF-8"?>
-    <xs:schema xmlns="simple-types">
-      <xs:simpleType name="user-id">
-        <xs:restriction base="xs:string">
-          <xs:length value="8" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="number-type">
-        <xs:restriction base="xs:int">
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:schema>
-  )";
-  document->Parse(xmlString);
+  auto simpleTypes = std::make_unique<SimpleTypes>();
+  std::vector<std::string> types = {
+      "type UserId = string;",
+      "type NumberType = number;"
+  };
+  for (auto &type : types) {
+    simpleTypes->push_back(this->createMockSimpleType(type));
+  }
 
-  auto typescriptModule = typeScriptModuleFactory
-      ->createTypescriptModule(xmlparse::XMLElementAdapter(*document->RootElement()));
+  auto typescriptModule2 = tsgen::TypescriptModuleImp("", std::move(simpleTypes));
 
   auto expectedDefinition = R"(/* tslint:disable */
 export type UserId = string;
 export type NumberType = number;
 )";
   ASSERT_STRCASEEQ(
-      typescriptModule->generateTypescriptSchema().c_str(), expectedDefinition);
+      typescriptModule2.generateTypescriptSchema().c_str(), expectedDefinition);
 }
 
-TEST_F(TypescriptModuleTest,
+TEST_F(TypescriptModuleImpTest,
        ShouldProperlyGenerateEnumerationNumberTypes) {
   auto xmlString = R"(
     <?xml version="1.0"encoding="UTF-8"?>
