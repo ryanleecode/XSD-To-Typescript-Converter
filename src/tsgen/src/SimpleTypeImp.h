@@ -4,7 +4,6 @@
 #include <vector>
 #include <memory>
 #include <unordered_set>
-#include "TypescriptPrimitive.h"
 #include "SimpleType.h"
 #include <XMLElement.h>
 
