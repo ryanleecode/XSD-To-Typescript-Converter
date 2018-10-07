@@ -19,5 +19,5 @@ TEST_F (XMLNullAttributeTest, shouldNotHaveAValue) {
 }
 
 TEST_F (XMLNullAttributeTest, nameShouldReturnNullOpt) {
-  EXPECT_EQ(xmlNullAttribute->value(), std::nullopt);
+  EXPECT_EQ(xmlNullAttribute->value(), "");
 }

@@ -9,7 +9,7 @@ namespace xmlparse {
 
     bool hasValue() const override;
 
-    std::optional<std::string> value() const override;
+    std::string value() const override;
   };
 }
 

@@ -5,10 +5,10 @@ xmlparse::XMLAttributeAdapter::XMLAttributeAdapter(
 ) : xmlAttribute_(xmlAttribute) {
 }
 
-std::optional<std::string> xmlparse::XMLAttributeAdapter::value() const {
+std::string xmlparse::XMLAttributeAdapter::value() const {
   return xmlAttribute_.Value()
-         ? std::optional(std::string(xmlAttribute_.Value()))
-    : std::nullopt;
+         ? std::string(xmlAttribute_.Value())
+         : "";
 }
 
 bool xmlparse::XMLAttributeAdapter::hasValue() const {

@@ -1,10 +1,11 @@
 add_executable(tsgen_test
-        "src/TypescriptModuleImpTest.cpp"
-        "src/TypescriptModuleBuilderTest.cpp"
-        "src/SimpleTypeImpTest.cpp"
-        "src/restrictions/StringRestrictionHandlerTest.cpp"
         "src/mocks/MockXMLElement.h"
-        "src/mocks/MockXMLAttribute.h" src/mocks/MockSimpleType.h src/restrictions/NumberRestrictionHandlerTest.cpp)
+        "src/mocks/MockXMLAttribute.h"
+        src/XSDToTypescriptParseTreeTest.cpp
+        src/mocks/MockXSDElementProcessor.h
+        src/XSDSimpleTypeElementProcessorTest.cpp
+        src/XSDStringRestrictionElementProcessorTest.cpp
+        src/XSDEnumerationProcessorImpTest.cpp src/mocks/MockEnumerationsProcessor.h src/XSDStringEnumerationsProcessorTest.cpp)
 
 target_link_libraries(tsgen_test
         PRIVATE

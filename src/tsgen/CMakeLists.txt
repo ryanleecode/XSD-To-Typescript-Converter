@@ -7,12 +7,12 @@ endif ()
 project(tsgen VERSION 1.0.0 LANGUAGES CXX)
 
 add_library(tsgen
-        "src/TypescriptModuleFactory.cpp"
-        "src/SimpleType.cpp"
-        "src/SimpleTypeImp.cpp"
-        "src/restrictions/StringRestrictionHandler.cpp"
-        "src/restrictions/NumberRestrictionHandler.cpp"
-        "src/TypescriptModuleImp.cpp" src/restrictions/RestrictionHandler.h src/restrictions/RestrictionHandler.cpp)
+        src/XSDToTypescriptParseTree.cpp
+        src/XSDSimpleTypeElementProcessor.cpp
+        src/XSDElementProcessorImp.cpp
+        src/XSDRestrictionElementProcessor.cpp
+        src/XSDStringRestrictionElementProcessor.cpp
+        src/XSDEnumerationsProcessorImp.cpp src/XSDStringEnumerationsProcessor.cpp include/XSDStringEnumerationsProcessor.h src/XSDDecimalRestrictionElementProcessor.cpp include/XSDDecimalRestrictionElementProcessor.h)
 
 target_include_directories(tsgen
         PUBLIC

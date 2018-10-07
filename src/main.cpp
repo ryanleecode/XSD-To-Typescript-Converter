@@ -1,7 +1,12 @@
 #include <iostream>
 #include <tinyxml2.h>
 #include <XMLElementAdapter.h>
-#include <TypescriptModuleFactory.h>
+#include <XSDToTypescriptParseTree.h>
+#include <XSDSimpleTypeElementProcessor.h>
+#include <XSDRestrictionElementProcessor.h>
+#include <XSDStringRestrictionElementProcessor.h>
+#include <XSDEnumerationsProcessorImp.h>
+#include <XSDStringEnumerationsProcessor.h>
 
 int main(int argc, char const *argv[]) {
 /*
@@ -30,7 +35,23 @@ int main(int argc, char const *argv[]) {
 */
   tinyxml2::XMLDocument doc;
   doc.LoadFile("Elements.xsd");
-  auto tsModule = tsgen::TypescriptModuleFactory().createTypescriptModule(
-      xmlparse::XMLElementAdapter(*doc.RootElement()));
+
+  tsgen::XSDStringEnumerationsProcessor xsdStringEnumerationsProcessor;
+  auto stringRestrictionProcessor =
+      std::make_shared<tsgen::XSDStringRestrictionElementProcessor>(
+          xsdStringEnumerationsProcessor);
+
+  tsgen::SharedXSDElementProcessors simpleTypeProcessors;
+  simpleTypeProcessors.push_back(stringRestrictionProcessor);
+  auto simpleTypeElementProcessor = std::make_shared<tsgen::XSDSimpleTypeElementProcessor>(
+      simpleTypeProcessors);
+
+  tsgen::SharedXSDElementProcessors subprocessors;
+  subprocessors.push_back(simpleTypeElementProcessor);
+  tsgen::XSDToTypescriptParseTree xsdToTypescriptParseTree(subprocessors);
+  std::shared_ptr<xmlparse::XMLElement> xmlElementPtr(
+      new xmlparse::XMLElementAdapter(*doc.RootElement()));
+  std::cout << xsdToTypescriptParseTree.process(xmlElementPtr) << std::endl;
+
   return 0;
 }

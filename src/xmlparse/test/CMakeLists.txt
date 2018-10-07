@@ -1,10 +1,6 @@
 add_executable(xmlparse_test
-        "src/IncorrectXSDElementNameExceptionTest.cpp"
-        "src/MissingXSDAttributeExceptionTest.cpp"
         "src/XMLNullAttributeTest.cpp"
-        "src/XMLNullElementTest.cpp"
-        "../../tsgen/test/src/mocks/MockXMLAttribute.h"
-        "../../tsgen/test/src/mocks/MockXMLElement.h")
+        "src/XMLNullElementTest.cpp")
 
 target_link_libraries(xmlparse_test
         PRIVATE

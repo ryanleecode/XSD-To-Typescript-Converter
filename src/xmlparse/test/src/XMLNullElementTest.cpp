@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "../../src/XMLElement/XMLNullElement.h"
 #include "../../src/XMLAttribute/XMLNullAttribute.h"
+#include <XMLElement.h>
 
 class XMLNullElementTest : public ::testing::Test {
 protected:
@@ -42,4 +43,9 @@ TEST_F (XMLNullElementTest, nextSiblingElementShouldReturnXMLNullElement) {
 TEST_F (XMLNullElementTest, findAttributeShouldReturnXMLNullAttribute) {
   auto attribute = xmlNullElement->findAttribute("");
   EXPECT_NO_THROW(dynamic_cast<xmlparse::XMLNullAttribute&>(*attribute));
+}
+
+TEST_F (XMLNullElementTest, childrenShouldBeEmpty) {
+  EXPECT_EQ(xmlNullElement->children().size(), 0);
+  EXPECT_EQ(xmlNullElement->children("xs:enumeration").size(), 0);
 }

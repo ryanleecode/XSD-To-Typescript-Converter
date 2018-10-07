@@ -1,3 +1,6 @@
+
+#include <XMLElementAdapter.h>
+
 #include "XMLElementAdapter.h"
 #include "../XMLAttribute/XMLAttributeAdapter.h"
 #include "XMLNullElement.h"
@@ -14,65 +17,88 @@ std::optional<std::string> xmlparse::XMLElementAdapter::name() const {
          : std::nullopt;
 }
 
-std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::firstChildElement(
+std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::firstChildElement(
     const std::string &name
 ) const {
 
   const auto rawXMLElement = xmlElement_.FirstChildElement(name.c_str());
 
   if (rawXMLElement == nullptr) {
-    return std::make_unique<xmlparse::XMLNullElement>();
+    return std::make_shared<xmlparse::XMLNullElement>();
   }
 
-  return std::make_unique<xmlparse::XMLElementAdapter>(*rawXMLElement);
+  return std::make_shared<xmlparse::XMLElementAdapter>(*rawXMLElement);
 }
 
-std::unique_ptr<xmlparse::XMLAttribute> xmlparse::XMLElementAdapter::findAttribute(
+std::shared_ptr<xmlparse::XMLAttribute> xmlparse::XMLElementAdapter::findAttribute(
     const std::string &name
 ) const {
   auto rawAttribute = xmlElement_.FindAttribute(name.c_str());
 
   if (rawAttribute == nullptr) {
-    return std::make_unique<xmlparse::XMLNullAttribute>();
+    return std::make_shared<xmlparse::XMLNullAttribute>();
   }
 
-  return std::make_unique<xmlparse::XMLAttributeAdapter>(*rawAttribute);
+  return std::make_shared<xmlparse::XMLAttributeAdapter>(*rawAttribute);
 }
 
-std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::nextSiblingElement(
+std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::nextSiblingElement(
     const std::string &name
 ) const {
   auto rawSibling = xmlElement_.NextSiblingElement(name.c_str());
 
   if (rawSibling == nullptr) {
-    return std::make_unique<xmlparse::XMLNullElement>();
+    return std::make_shared<xmlparse::XMLNullElement>();
   }
 
-  return std::make_unique<xmlparse::XMLElementAdapter>(*rawSibling);
+  return std::make_shared<xmlparse::XMLElementAdapter>(*rawSibling);
 }
 
-std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::firstChildElement() const {
+std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::firstChildElement() const {
   auto rawFirstChild = xmlElement_.FirstChildElement();
 
   if (rawFirstChild == nullptr) {
-    return std::make_unique<xmlparse::XMLNullElement>();
+    return std::make_shared<xmlparse::XMLNullElement>();
   }
 
-  return std::make_unique<xmlparse::XMLElementAdapter>(*rawFirstChild);
+  return std::make_shared<xmlparse::XMLElementAdapter>(*rawFirstChild);
 }
 
-std::unique_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::nextSiblingElement() const {
+std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::nextSiblingElement() const {
   auto rawNextSibling = xmlElement_.NextSiblingElement();
 
   if (rawNextSibling == nullptr) {
-    return std::make_unique<xmlparse::XMLNullElement>();
+    return std::make_shared<xmlparse::XMLNullElement>();
   }
 
-  return std::make_unique<xmlparse::XMLElementAdapter>(
+  return std::make_shared<xmlparse::XMLElementAdapter>(
       *rawNextSibling);
 }
 
 bool xmlparse::XMLElementAdapter::hasValue() const {
   return true;
+}
+
+std::vector<xmlparse::XMLElement::SharedXMLElement> xmlparse::XMLElementAdapter::children() const {
+  std::vector<xmlparse::XMLElement::SharedXMLElement> children;
+  auto child = this->firstChildElement();
+  while (child->hasValue()) {
+    children.push_back(child);
+    child = child->nextSiblingElement();
+  }
+  return children;
+}
+
+std::vector<xmlparse::XMLElement::SharedXMLElement>
+xmlparse::XMLElementAdapter::children(const std::string &name) const {
+  std::vector<xmlparse::XMLElement::SharedXMLElement> children;
+  auto child = this->firstChildElement();
+  while (child->hasValue()) {
+    if (child->name().has_value() && child->name().value() == name) {
+      children.push_back(child);
+    }
+    child = child->nextSiblingElement();
+  }
+  return children;
 }
 

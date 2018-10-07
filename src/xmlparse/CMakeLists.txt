@@ -7,9 +7,6 @@ endif ()
 project(xmlparse VERSION 1.0.0 LANGUAGES CXX)
 
 add_library(XMLParse
-        "src/XMLElementNameToCamelCaseConverter.cpp"
-        "src/MissingXMLAttributeException.cpp"
-        "src/IncorrectXMLElementNameException.cpp"
         "src/XMLElement/XMLNullElement.cpp"
         "src/XMLElement/XMLElementAdapter.cpp"
         "src/XMLAttribute/XMLAttributeAdapter.cpp"

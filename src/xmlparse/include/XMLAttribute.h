@@ -9,6 +9,7 @@ namespace xmlparse {
 
     virtual bool hasValue() const = 0;
 
-    virtual std::optional<std::string> value() const = 0;
+    virtual std::string value() const = 0;
   };
 }
+
