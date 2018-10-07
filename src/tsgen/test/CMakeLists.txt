@@ -5,7 +5,11 @@ add_executable(tsgen_test
         src/mocks/MockXSDElementProcessor.h
         src/XSDSimpleTypeElementProcessorTest.cpp
         src/XSDStringRestrictionElementProcessorTest.cpp
-        src/XSDEnumerationProcessorImpTest.cpp src/mocks/MockEnumerationsProcessor.h src/XSDStringEnumerationsProcessorTest.cpp)
+        src/XSDEnumerationProcessorImpTest.cpp
+        src/mocks/MockEnumerationsProcessor.h
+        src/XSDStringEnumerationsProcessorTest.cpp
+        src/XSDDecimalRestrictionElementProcessorTest.cpp
+        src/XSDIntegerRestrictionElementProcessorTest.cpp)
 
 target_link_libraries(tsgen_test
         PRIVATE

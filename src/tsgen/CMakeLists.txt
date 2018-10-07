@@ -12,7 +12,10 @@ add_library(tsgen
         src/XSDElementProcessorImp.cpp
         src/XSDRestrictionElementProcessor.cpp
         src/XSDStringRestrictionElementProcessor.cpp
-        src/XSDEnumerationsProcessorImp.cpp src/XSDStringEnumerationsProcessor.cpp include/XSDStringEnumerationsProcessor.h src/XSDDecimalRestrictionElementProcessor.cpp include/XSDDecimalRestrictionElementProcessor.h)
+        src/XSDEnumerationsProcessorImp.cpp
+        src/XSDStringEnumerationsProcessor.cpp
+        src/XSDDecimalRestrictionElementProcessor.cpp
+        src/XSDIntegerRestrictionElementProcessor.cpp)
 
 target_include_directories(tsgen
         PUBLIC
