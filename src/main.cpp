@@ -9,6 +9,7 @@
 #include <XSDStringEnumerationsProcessor.h>
 #include <XSDDecimalRestrictionElementProcessor.h>
 #include <XSDIntegerRestrictionElementProcessor.h>
+#include <XSDDatetimeRestrictionElementProcessor.h>
 
 int main(int argc, char const *argv[]) {
   tinyxml2::XMLDocument doc;
@@ -20,7 +21,8 @@ int main(int argc, char const *argv[]) {
       std::make_shared<tsgen::XSDStringRestrictionElementProcessor>(
           xsdStringEnumerationsProcessor),
       std::make_shared<tsgen::XSDIntegerRestrictionElementProcessor>(),
-      std::make_shared<tsgen::XSDDecimalRestrictionElementProcessor>()
+      std::make_shared<tsgen::XSDDecimalRestrictionElementProcessor>(),
+      std::make_shared<tsgen::XSDDatetimeRestrictionElementProcessor>()
   };
 
   tsgen::SharedXSDElementProcessors subprocessors = {
