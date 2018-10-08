@@ -23,7 +23,7 @@ conan remote add fruit https://api.bintray.com/conan/google/fruit
 
 #### XSD Files
 
-Create an XSD file with the name `Elements.xsd` and drop it in `<rootdir>/src`. An example file is provided here.
+Create an XSD file with the name `Elements.xsd` and drop it in `<rootdir>/src`. An example file is provided [here](SampleXSD.xml).
 
 ## Building
 

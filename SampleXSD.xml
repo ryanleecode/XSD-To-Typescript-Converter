@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="ship-via">
+    <xs:annotation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="frieght">
+    <xs:annotation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ship-name">
+    <xs:annotation>
+      <xs:documentation>
+          Ship Name
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="8" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name='ShipInfoType'>
+    <xs:sequence>
+      <xs:element name='ShipVia' type='ship-via'/>
+      <xs:element name='Freight' type='frieght'/>
+      <xs:element name='ShipName' type='ship-name'/>
+      <xs:element name='ShipAddress' type='xs:string'/>
+      <xs:element name='ShipCity' type='xs:string'/>
+      <xs:element name='ShipRegion' type='xs:string'/>
+      <xs:element name='ShipPostalCode' type='xs:string'/>
+      <xs:element name='ShipCountry' type='xs:string'/>
+    </xs:sequence>
+    <xs:attribute name='ShippedDate' type='xs:dateTime'/>
+  </xs:complexType>
+</xs:schema>
