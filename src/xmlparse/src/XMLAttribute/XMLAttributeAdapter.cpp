@@ -9,12 +9,12 @@ std::string xmlparse::XMLAttributeAdapter::value() const {
   if (xmlAttribute_.Value() == nullptr) {
     return "";
   }
-  auto removeCharsBeforeColumn = [](std::string &str) {
+  auto removeCharsBeforeColon = [](std::string &str) {
     size_t position = str.find(':');
     str = str.substr(position + 1);
   };
   auto value = std::string(xmlAttribute_.Value());
-  removeCharsBeforeColumn(value);
+  removeCharsBeforeColon(value);
   return value;
 }
 

@@ -14,12 +14,12 @@ std::optional<std::string> xmlparse::XMLElementAdapter::name() const {
   if (xmlElement_.Name() == nullptr) {
     return std::nullopt;
   }
-  auto removeCharsBeforeColumn = [](std::string &str) {
+  auto removeCharsBeforeColon = [](std::string &str) {
     size_t position = str.find(':');
     str = str.substr(position + 1);
   };
   auto name = std::string(xmlElement_.Name());
-  removeCharsBeforeColumn(name);
+  removeCharsBeforeColon(name);
   return std::optional(name);
 }
 
