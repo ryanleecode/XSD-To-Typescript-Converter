@@ -76,6 +76,8 @@ cd <rootdir>/src/cmake-build-debug/bin/
     - [ ] Pattern
   - [x] DateTime Type
 - [x] XSD Complex Type
+  - [ ] Optional
   - [x] Basic
+  - [ ] All Type
   - [x] XSD Sequence Type
 - [x] XSD Element Type
