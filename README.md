@@ -60,6 +60,7 @@ cd <rootdir>/src/cmake-build-debug/bin/
 ## Roadmap
 
 - [ ] CLI Support
+  - [ ] Glob Support
 - [ ] NPM Package
 
 - [ ] XSD Simple Type
