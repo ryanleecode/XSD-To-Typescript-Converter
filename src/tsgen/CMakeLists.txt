@@ -15,7 +15,7 @@ add_library(tsgen
         src/XSDEnumerationsProcessorImp.cpp
         src/XSDStringEnumerationsProcessor.cpp
         src/XSDDecimalRestrictionElementProcessor.cpp
-        src/XSDIntegerRestrictionElementProcessor.cpp src/XSDDatetimeRestrictionElementProcessor.cpp include/XSDDatetimeRestrictionElementProcessor.h)
+        src/XSDIntegerRestrictionElementProcessor.cpp src/XSDDatetimeRestrictionElementProcessor.cpp include/XSDDatetimeRestrictionElementProcessor.h src/XSDComplexTypeElementProcessor.cpp include/XSDComplexTypeElementProcessor.h src/XSDSequenceTypeElementProcessor.cpp include/XSDSequenceTypeElementProcessor.h)
 
 target_include_directories(tsgen
         PUBLIC

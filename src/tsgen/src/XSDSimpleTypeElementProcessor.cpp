@@ -28,18 +28,6 @@ std::string tsgen::XSDSimpleTypeElementProcessor::process(
   text << " = ";
   text << XSDElementProcessorImp::process(element);
   text << ";\n";
-  return text.str();
-}
 
-std::string tsgen::XSDSimpleTypeElementProcessor::convertStringToPascalCase(
-    const std::string& str
-) const {
-  std::string trimmedName = str;
-  boost::trim(trimmedName);
-  std::vector<std::string> strs;
-  boost::split(strs, trimmedName, boost::is_any_of("-,_"));
-  for (unsigned int i = 0; i < strs.size(); i += 1) {
-    strs[i][0] = (unsigned char) toupper(strs[i][0]);
-  }
-  return boost::algorithm::join(strs, "");
+  return text.str();
 }

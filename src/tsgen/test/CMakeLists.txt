@@ -9,7 +9,7 @@ add_executable(tsgen_test
         src/mocks/MockEnumerationsProcessor.h
         src/XSDStringEnumerationsProcessorTest.cpp
         src/XSDDecimalRestrictionElementProcessorTest.cpp
-        src/XSDIntegerRestrictionElementProcessorTest.cpp src/XSDDatetimeRestrictionElementProcessorTest.cpp)
+        src/XSDIntegerRestrictionElementProcessorTest.cpp src/XSDDatetimeRestrictionElementProcessorTest.cpp src/XSDComplexTypeElementProcessorTest.cpp src/XSDSequenceTypeElementProcessorTest.cpp)
 
 target_link_libraries(tsgen_test
         PRIVATE
