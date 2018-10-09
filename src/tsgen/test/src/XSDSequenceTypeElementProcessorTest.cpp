@@ -3,6 +3,7 @@
 #include "mocks/MockXMLElement.h"
 #include "mocks/MockXMLAttribute.h"
 #include "mocks/MockXSDElementProcessor.h"
+#include "mocks/MockPascalCaseTextProcessor.h"
 
 using ::testing::Return;
 using ::testing::_;
@@ -10,59 +11,74 @@ using ::testing::_;
 class XSDSequenceTypeElementProcessorTest : public ::testing::Test {
 protected:
   void SetUp() override {
-
+    pascalCaseTextProcessor = new util::MockPascalCaseTextProcessor();
+    sequenceTypeElementProcessor = new tsgen::XSDSequenceTypeElementProcessor(
+        *pascalCaseTextProcessor);
   }
 
   void TearDown() override {
+    delete sequenceTypeElementProcessor;
+    delete pascalCaseTextProcessor;
   }
+
+  tsgen::SharedXSDElementProcessors *preprocessors;
+  tsgen::XSDSequenceTypeElementProcessor *sequenceTypeElementProcessor;
+  util::MockPascalCaseTextProcessor *pascalCaseTextProcessor;
 };
 
 TEST_F (
     XSDSequenceTypeElementProcessorTest, shouldReturnEmptyStringIfNotASequenceType) {
-  tsgen::XSDSequenceTypeElementProcessor sequenceTypeElementProcessor;
   auto mockXMlElement = std::make_shared<xmlparse::MockXMLElement>();
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
       .WillOnce(Return("xs:someType"));
-  EXPECT_EQ(sequenceTypeElementProcessor.process(mockXMlElement), "");
+  EXPECT_EQ(sequenceTypeElementProcessor->process(mockXMlElement), "");
 }
 
 TEST_F (
     XSDSequenceTypeElementProcessorTest, shouldFilterOutChildrenThatAreNotElementTypes) {
-  tsgen::XSDSequenceTypeElementProcessor sequenceTypeElementProcessor;
   auto mockXMlElement = std::make_shared<xmlparse::MockXMLElement>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
       .WillOnce(Return("xs:sequence"));
 
   EXPECT_CALL(*mockXMlElement, children("xs:element"));
-  sequenceTypeElementProcessor.process(mockXMlElement);
+  sequenceTypeElementProcessor->process(mockXMlElement);
 }
 
 TEST_F (
     XSDSequenceTypeElementProcessorTest, shouldParseChildrenAsProperKeyValuePairs) {
-  tsgen::XSDSequenceTypeElementProcessor sequenceTypeElementProcessor;
   auto mockXMlElement = std::make_shared<xmlparse::MockXMLElement>();
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
       .WillOnce(Return("xs:sequence"));
 
+  std::string friendId = "friend-id";
+  std::string location = "location";
   std::map<std::string, std::string> keyValuePairs = {
-      { "friend-id", "friend-id" },
-      { "location", "location" }
+      {friendId, friendId},
+      {location, location}
   };
+
+  EXPECT_CALL(*pascalCaseTextProcessor, process(friendId))
+      .WillOnce(testing::Invoke([](std::string &word) -> void {
+        word = "FriendId";
+      }));
+  EXPECT_CALL(*pascalCaseTextProcessor, process(location))
+      .WillOnce(testing::Invoke([](std::string &word) -> void {
+        word = "Location";
+      }));
+
   std::vector<tsgen::SharedXMLElement> children;
-  for (const auto& pair: keyValuePairs) {
+  for (const auto &pair: keyValuePairs) {
     auto element = std::make_shared<xmlparse::MockXMLElement>();
-    EXPECT_CALL(*element, name())
-      .WillOnce(Return("xs:element"));
     auto nameAttr = std::make_shared<xmlparse::MockXMLAttribute>();
     EXPECT_CALL(*nameAttr, value())
-      .WillOnce(Return(pair.first));
+        .WillOnce(Return(pair.first));
     EXPECT_CALL(*element, findAttribute("name"))
-      .WillOnce(Return(nameAttr));
+        .WillOnce(Return(nameAttr));
     auto valueAttr = std::make_shared<xmlparse::MockXMLAttribute>();
     EXPECT_CALL(*valueAttr, value())
         .WillOnce(Return(pair.second));
@@ -73,9 +89,48 @@ TEST_F (
   }
 
   EXPECT_CALL(*mockXMlElement, children("xs:element"))
-    .WillOnce(Return(children));
-  EXPECT_EQ(sequenceTypeElementProcessor.process(mockXMlElement),
-      R"("friend-id": FriendId;
-"location": Location;
-)");
+      .WillOnce(Return(children));
+  EXPECT_EQ(sequenceTypeElementProcessor->process(mockXMlElement),
+            "\t\"friend-id\" : FriendId;\n\t\"location\" : Location;\n");
+}
+
+TEST_F (
+    XSDSequenceTypeElementProcessorTest, shouldReturnPrimitiveTypesOnProcessingSimpleTypes) {
+  auto mockXMlElement = std::make_shared<xmlparse::MockXMLElement>();
+  auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
+  EXPECT_CALL(*mockXMlElement, name())
+      .Times(1)
+      .WillOnce(Return("xs:sequence"));
+
+  typedef std::pair<std::string, std::string> StringPair;
+  std::vector<StringPair> keyValuePairs = {
+      {"some-string",   "xs:string"},
+      {"some-decimal",  "xs:decimal"},
+      {"some-integer",  "xs:int"},
+      {"some-datetime", "xs:dateTime"}
+  };
+
+  std::vector<tsgen::SharedXMLElement> children;
+  for (const auto &pair: keyValuePairs) {
+    auto element = std::make_shared<xmlparse::MockXMLElement>();
+    auto nameAttr = std::make_shared<xmlparse::MockXMLAttribute>();
+    EXPECT_CALL(*nameAttr, value())
+        .WillOnce(Return(pair.first));
+    EXPECT_CALL(*element, findAttribute("name"))
+        .WillOnce(Return(nameAttr));
+    auto valueAttr = std::make_shared<xmlparse::MockXMLAttribute>();
+    EXPECT_CALL(*valueAttr, value())
+        .WillOnce(Return(pair.second));
+    EXPECT_CALL(*element, findAttribute("type"))
+        .WillOnce(Return(valueAttr));
+
+    children.push_back(element);
+  }
+
+  EXPECT_CALL(*mockXMlElement, children("xs:element"))
+      .WillOnce(Return(children));
+  auto result = sequenceTypeElementProcessor->process(mockXMlElement);
+  EXPECT_EQ(result,
+            "\t\"some-string\" : string;\n\t\"some-decimal\" : number;"
+            "\n\t\"some-integer\" : number;\n\t\"some-datetime\" : string;\n");
 }

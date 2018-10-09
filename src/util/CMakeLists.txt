@@ -7,7 +7,7 @@ endif ()
 project(util VERSION 1.0.0 LANGUAGES CXX)
 
 add_library(Util
-        "src/NotImplementedException.cpp")
+        "src/NotImplementedException.cpp" src/PascalCaseTextProcessorImp.cpp include/PascalCaseTextProcessor.h include/PascalCaseTextProcessorImp.h)
 
 target_include_directories(Util
         PUBLIC
@@ -18,5 +18,10 @@ target_include_directories(Util
         )
 target_compile_options(Util PRIVATE -Werror)
 target_compile_features(Util PRIVATE cxx_std_17)
+
+target_link_libraries(Util
+        PRIVATE
+        CONAN_PKG::boost_algorithm
+        )
 
 add_subdirectory(test)

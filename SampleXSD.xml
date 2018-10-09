@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:simpleType name="ship-via">
-    <xs:annotation>
-    </xs:annotation>
-    <xs:restriction base="xs:integer">
+    <xs:restriction base="xs:int">
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="frieght">
+  <xs:simpleType name="freight">
     <xs:annotation>
     </xs:annotation>
     <xs:restriction base="xs:decimal">
@@ -15,7 +13,7 @@
   <xs:simpleType name="ship-name">
     <xs:annotation>
       <xs:documentation>
-          Ship Name
+        Ship Name
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
@@ -24,15 +22,15 @@
   </xs:simpleType>
   <xs:complexType name='ShipInfoType'>
     <xs:sequence>
-      <xs:element name='ShipVia' type='ship-via'/>
-      <xs:element name='Freight' type='frieght'/>
-      <xs:element name='ShipName' type='ship-name'/>
-      <xs:element name='ShipAddress' type='xs:string'/>
-      <xs:element name='ShipCity' type='xs:string'/>
-      <xs:element name='ShipRegion' type='xs:string'/>
-      <xs:element name='ShipPostalCode' type='xs:string'/>
-      <xs:element name='ShipCountry' type='xs:string'/>
+      <xs:element name='ship-via' type='ship-via'/>
+      <xs:element name='freight' type='freight'/>
+      <xs:element name='ship-name' type='ship-name'/>
+      <xs:element name='ship-address' type='xs:string'/>
+      <xs:element name='ship-city' type='xs:string'/>
+      <xs:element name='ship-region' type='xs:string'/>
+      <xs:element name='ship-postal-code' type='xs:string'/>
+      <xs:element name='ship-country' type='xs:string'/>
     </xs:sequence>
-    <xs:attribute name='ShippedDate' type='xs:dateTime'/>
+    <xs:attribute name='shipped-date' type='xs:dateTime'/>
   </xs:complexType>
 </xs:schema>

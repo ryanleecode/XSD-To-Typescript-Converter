@@ -1,5 +1,5 @@
 add_executable(util_test
-        "src/NotImplementedExceptionTest.cpp")
+        "src/NotImplementedExceptionTest.cpp" src/PascalCaseTextProcessorImpTest.cpp)
 
 target_link_libraries(util_test
         PRIVATE

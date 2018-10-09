@@ -1,8 +1,6 @@
 
 #include <XSDStringEnumerationsProcessor.h>
 
-#include "XSDStringEnumerationsProcessor.h"
-
 std::string
 tsgen::XSDStringEnumerationsProcessor::processEnumerationElement(tsgen::SharedXMLElement enumeration) const {
   auto parsedResult = XSDEnumerationsProcessorImp::processEnumerationElement(enumeration);

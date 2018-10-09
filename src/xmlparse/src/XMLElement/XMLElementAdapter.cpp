@@ -1,10 +1,9 @@
 
 #include <XMLElementAdapter.h>
-
-#include "XMLElementAdapter.h"
-#include "../XMLAttribute/XMLAttributeAdapter.h"
+#include <XMLElementAdapter.h>
+#include <XMLAttribute/XMLNullAttribute.h>
+#include <XMLAttribute/XMLAttributeAdapter.h>
 #include "XMLNullElement.h"
-#include "../XMLAttribute/XMLNullAttribute.h"
 
 xmlparse::XMLElementAdapter::XMLElementAdapter(
     const tinyxml2::XMLElement &xmlElement

@@ -1,8 +1,6 @@
 
 #include <XSDStringRestrictionElementProcessor.h>
 
-#include "XSDStringRestrictionElementProcessor.h"
-
 tsgen::XSDStringRestrictionElementProcessor::XSDStringRestrictionElementProcessor(
     const tsgen::XSDEnumerationsProcessor &enumerationsProcessor
 ) : enumerationsProcessor_(enumerationsProcessor) {

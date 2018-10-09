@@ -74,6 +74,7 @@ cd <rootdir>/src/cmake-build-debug/bin/
     - [ ] Min/Max Inclusive
     - [ ] Pattern
   - [x] DateTime Type
-- [ ] XSD Complex Type
-  - [ ] XSD Sequence Type
-- [ ] XSD Element Type
+- [x] XSD Complex Type
+  - [x] Basic
+  - [x] XSD Sequence Type
+- [x] XSD Element Type

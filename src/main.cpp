@@ -11,6 +11,8 @@
 #include <XSDIntegerRestrictionElementProcessor.h>
 #include <XSDDatetimeRestrictionElementProcessor.h>
 #include <XSDComplexTypeElementProcessor.h>
+#include <PascalCaseTextProcessorImp.h>
+#include <XSDSequenceTypeElementProcessor.h>
 
 int main(int argc, char const *argv[]) {
   tinyxml2::XMLDocument doc;
@@ -26,7 +28,10 @@ int main(int argc, char const *argv[]) {
       std::make_shared<tsgen::XSDDatetimeRestrictionElementProcessor>()
   };
 
-  tsgen::SharedXSDElementProcessors complexTypeSubProcessors = {};
+  util::PascalCaseTextProcessorImp pascalCaseTextProcessorImp;
+  tsgen::SharedXSDElementProcessors complexTypeSubProcessors = {
+      std::make_shared<tsgen::XSDSequenceTypeElementProcessor>(pascalCaseTextProcessorImp)
+  };
 
   tsgen::SharedXSDElementProcessors subprocessors = {
       std::make_shared<tsgen::XSDSimpleTypeElementProcessor>(
