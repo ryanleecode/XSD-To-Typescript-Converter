@@ -47,5 +47,5 @@ TEST_F (XMLNullElementTest, findAttributeShouldReturnXMLNullAttribute) {
 
 TEST_F (XMLNullElementTest, childrenShouldBeEmpty) {
   EXPECT_EQ(xmlNullElement->children().size(), 0);
-  EXPECT_EQ(xmlNullElement->children("xs:enumeration").size(), 0);
+  EXPECT_EQ(xmlNullElement->children("enumeration").size(), 0);
 }

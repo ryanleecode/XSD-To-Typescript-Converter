@@ -32,7 +32,7 @@ TEST_F (
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:someType"));
+      .WillOnce(Return("someType"));
   EXPECT_EQ(sequenceTypeElementProcessor->process(mockXMlElement), "");
 }
 
@@ -41,9 +41,9 @@ TEST_F (
   auto mockXMlElement = std::make_shared<xmlparse::MockXMLElement>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:sequence"));
+      .WillOnce(Return("sequence"));
 
-  EXPECT_CALL(*mockXMlElement, children("xs:element"));
+  EXPECT_CALL(*mockXMlElement, children("element"));
   sequenceTypeElementProcessor->process(mockXMlElement);
 }
 
@@ -53,7 +53,7 @@ TEST_F (
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:sequence"));
+      .WillOnce(Return("sequence"));
 
   std::string friendId = "friend-id";
   std::string location = "location";
@@ -88,7 +88,7 @@ TEST_F (
     children.push_back(element);
   }
 
-  EXPECT_CALL(*mockXMlElement, children("xs:element"))
+  EXPECT_CALL(*mockXMlElement, children("element"))
       .WillOnce(Return(children));
   EXPECT_EQ(sequenceTypeElementProcessor->process(mockXMlElement),
             "\t\"friend-id\" : FriendId;\n\t\"location\" : Location;\n");
@@ -100,14 +100,14 @@ TEST_F (
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:sequence"));
+      .WillOnce(Return("sequence"));
 
   typedef std::pair<std::string, std::string> StringPair;
   std::vector<StringPair> keyValuePairs = {
-      {"some-string",   "xs:string"},
-      {"some-decimal",  "xs:decimal"},
-      {"some-integer",  "xs:int"},
-      {"some-datetime", "xs:dateTime"}
+      {"some-string",   "string"},
+      {"some-decimal",  "decimal"},
+      {"some-integer",  "int"},
+      {"some-datetime", "dateTime"}
   };
 
   std::vector<tsgen::SharedXMLElement> children;
@@ -127,7 +127,7 @@ TEST_F (
     children.push_back(element);
   }
 
-  EXPECT_CALL(*mockXMlElement, children("xs:element"))
+  EXPECT_CALL(*mockXMlElement, children("element"))
       .WillOnce(Return(children));
   auto result = sequenceTypeElementProcessor->process(mockXMlElement);
   EXPECT_EQ(result,

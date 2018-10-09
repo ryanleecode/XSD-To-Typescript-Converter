@@ -14,7 +14,7 @@ std::string tsgen::XSDSimpleTypeElementProcessor::process(
     const tsgen::SharedXMLElement &element
 ) const {
   auto elementName = element->name();
-  if (!elementName.has_value() || elementName.value() != "xs:simpleType") {
+  if (!elementName.has_value() || elementName.value() != "simpleType") {
     return "";
   }
   auto typeName = element->findAttribute("name");

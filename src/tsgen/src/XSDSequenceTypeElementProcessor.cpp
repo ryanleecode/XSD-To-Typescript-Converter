@@ -4,10 +4,10 @@
 #include <unordered_map>
 
 const std::unordered_map<std::string, std::string> simpleTypeMap = {
-    {"xs:string",   "string"},
-    {"xs:int",      "number"},
-    {"xs:decimal",  "number"},
-    {"xs:dateTime", "string"}
+    {"string",   "string"},
+    {"int",      "number"},
+    {"decimal",  "number"},
+    {"dateTime", "string"}
 };
 
 tsgen::XSDSequenceTypeElementProcessor::XSDSequenceTypeElementProcessor(
@@ -18,11 +18,11 @@ tsgen::XSDSequenceTypeElementProcessor::XSDSequenceTypeElementProcessor(
 std::string tsgen::XSDSequenceTypeElementProcessor::process(
     const tsgen::SharedXMLElement &element
 ) const {
-  if (element->name() != "xs:sequence") {
+  if (element->name() != "sequence") {
     return "";
   }
   std::stringstream text;
-  for (const auto& child : element->children("xs:element")) {
+  for (const auto &child : element->children("element")) {
     std::string type = child->findAttribute("type")->value();
 
     auto simpleType = simpleTypeMap.find(type);

@@ -11,7 +11,7 @@ std::string tsgen::XSDComplexTypeElementProcessor::process(
     const tsgen::SharedXMLElement &element
 ) const {
   auto elementName = element->name();
-  if (elementName.value() != "xs:complexType") {
+  if (elementName.value() != "complexType") {
     return "";
   }
   auto typeName = element->findAttribute("name");

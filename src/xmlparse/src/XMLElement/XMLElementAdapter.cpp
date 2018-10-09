@@ -11,9 +11,16 @@ xmlparse::XMLElementAdapter::XMLElementAdapter(
 }
 
 std::optional<std::string> xmlparse::XMLElementAdapter::name() const {
-  return xmlElement_.Name()
-         ? std::optional(std::string(xmlElement_.Name()))
-         : std::nullopt;
+  if (xmlElement_.Name() == nullptr) {
+    return std::nullopt;
+  }
+  auto removeCharsBeforeColumn = [](std::string &str) {
+    size_t position = str.find(':');
+    str = str.substr(position + 1);
+  };
+  auto name = std::string(xmlElement_.Name());
+  removeCharsBeforeColumn(name);
+  return std::optional(name);
 }
 
 std::shared_ptr<xmlparse::XMLElement> xmlparse::XMLElementAdapter::firstChildElement(

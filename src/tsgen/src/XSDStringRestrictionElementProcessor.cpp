@@ -9,13 +9,13 @@ tsgen::XSDStringRestrictionElementProcessor::XSDStringRestrictionElementProcesso
 std::string tsgen::XSDStringRestrictionElementProcessor::postProcess(
     const tsgen::SharedXMLElement &element
 ) const {
-  if (element->findAttribute("base")->value() != "xs:string") {
+  if (element->findAttribute("base")->value() != "string") {
     return "";
   }
-  if (!element->firstChildElement("xs:enumeration")->hasValue()) {
+  if (!element->firstChildElement("enumeration")->hasValue()) {
     return "string";
   }
-  auto values = element->children("xs:enumeration");
+  auto values = element->children("enumeration");
   return enumerationsProcessor_.process(values);
 }
 

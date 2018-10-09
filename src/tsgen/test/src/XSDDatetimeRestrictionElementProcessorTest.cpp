@@ -30,13 +30,13 @@ TEST_F (
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:restriction"));
+      .WillOnce(Return("restriction"));
   EXPECT_CALL(*mockXMlElement, findAttribute("base"))
       .Times(1)
       .WillOnce(Return(mockXMLAttr));
   EXPECT_CALL(*mockXMLAttr, value())
       .Times(1)
-      .WillOnce(Return("xs:something"));
+      .WillOnce(Return("something"));
 
   EXPECT_EQ(processor->process(mockXMlElement), "");
 }
@@ -47,12 +47,12 @@ TEST_F (
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:restriction"));
+      .WillOnce(Return("restriction"));
   EXPECT_CALL(*mockXMlElement, findAttribute("base"))
       .Times(1)
       .WillOnce(Return(mockXMLAttr));
   EXPECT_CALL(*mockXMLAttr, value())
       .Times(1)
-      .WillOnce(Return("xs:dateTime"));
+      .WillOnce(Return("dateTime"));
   EXPECT_EQ(processor->process(mockXMlElement), "string");
 }

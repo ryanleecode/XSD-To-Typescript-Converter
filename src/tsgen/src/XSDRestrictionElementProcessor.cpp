@@ -14,7 +14,7 @@ std::string tsgen::XSDRestrictionElementProcessor::process(
 tsgen::OptionalString tsgen::XSDRestrictionElementProcessor::preProcess(
     const tsgen::SharedXMLElement &element
 ) const {
-  if (element->name() != "xs:restriction") {
+  if (element->name() != "restriction") {
     return std::nullopt;
   }
   return "";

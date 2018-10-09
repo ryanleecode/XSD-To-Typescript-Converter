@@ -6,7 +6,7 @@
 std::string tsgen::XSDDatetimeRestrictionElementProcessor::postProcess(
     const tsgen::SharedXMLElement &element
 ) const {
-  if (element->findAttribute("base")->value() == "xs:dateTime") {
+  if (element->findAttribute("base")->value() == "dateTime") {
     return "string";
   }
   return std::__cxx11::string();

@@ -25,7 +25,7 @@ TEST_F (
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:simpleType"));
+      .WillOnce(Return("simpleType"));
   EXPECT_CALL(*mockXMLAttr, hasValue())
       .Times(1)
       .WillOnce(Return(false));
@@ -42,7 +42,7 @@ TEST_F (
   auto mockXMlElement = std::make_shared<xmlparse::MockXMLElement>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:complexType"));
+      .WillOnce(Return("complexType"));
   EXPECT_EQ(simpleTypeElementProcessor.process(mockXMlElement), "");
 }
 
@@ -54,7 +54,7 @@ TEST_F (
   auto mockXMLAttr = std::make_shared<xmlparse::MockXMLAttribute>();
   EXPECT_CALL(*mockXMlElement, name())
       .Times(1)
-      .WillOnce(Return("xs:simpleType"));
+      .WillOnce(Return("simpleType"));
   EXPECT_CALL(*mockXMlElement, findAttribute("name"))
       .Times(1)
       .WillOnce(Return(mockXMLAttr));
