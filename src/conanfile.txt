@@ -1,0 +1,9 @@
+[requires]
+tinyxml2/6.2.0@nicolastagliani/stable
+CLI11/1.6.1@cliutils/stable
+gtest/1.8.1@bincrafters/stable
+boost_algorithm/1.65.1@bincrafters/stable
+fruit/3.4.0@google/stable
+
+[generators]
+cmake

@@ -1,38 +1,47 @@
 #include <iostream>
-#include "tinyxml2.h"
-#include "tsgen/TypescriptModule.h"
-#include "xmlparse/IncorrectXMLElementNameException.h"
-#include "tsgen/TypescriptModuleFactory.h"
-#include "xmlparse/XMLElementImp.h"
+#include <tinyxml2.h>
+#include <XMLElementAdapter.h>
+#include <XSDToTypescriptParseTree.h>
+#include <XSDSimpleTypeElementProcessor.h>
+#include <XSDRestrictionElementProcessor.h>
+#include <XSDStringRestrictionElementProcessor.h>
+#include <XSDEnumerationsProcessorImp.h>
+#include <XSDStringEnumerationsProcessor.h>
+#include <XSDDecimalRestrictionElementProcessor.h>
+#include <XSDIntegerRestrictionElementProcessor.h>
+#include <XSDDatetimeRestrictionElementProcessor.h>
+#include <XSDComplexTypeElementProcessor.h>
+#include <PascalCaseTextProcessorImp.h>
+#include <XSDSequenceTypeElementProcessor.h>
 
 int main(int argc, char const *argv[]) {
-/*
-    CLI::App app("K3Pi goofit fitter");
-
-    std::string file;
-    CLI::Option *opt = app.add_option("-f,--file,file", file, "File name");
-
-    int count;
-    CLI::Option *copt = app.add_option("-c,--count", count, "Counter");
-
-    int v;
-    CLI::Option *flag = app.add_flag("--flag", v, "Some flag that can be passed multiple times");
-
-    double value; // = 3.14;
-    app.add_option("-d,--double", value, "Some Value");
-
-    CLI11_PARSE(app, argc, argv);
-
-    std::cout << "Working on file: " << file << ", direct count: " << app.count("--file")
-              << ", opt count: " << opt->count() << std::endl;
-    std::cout << "Working on count: " << count << ", direct count: " << app.count("--count")
-              << ", opt count: " << copt->count() << std::endl;
-    std::cout << "Received flag: " << v << " (" << flag->count() << ") times\n";
-    std::cout << "Some value: " << value << std::endl;
-*/
   tinyxml2::XMLDocument doc;
   doc.LoadFile("Elements.xsd");
-  auto tsModule = tsgen::TypeScriptModuleFactory().createTypescriptModule(
-      xmlparse::XMLElementImp(*doc.RootElement()));
+
+  tsgen::XSDStringEnumerationsProcessor xsdStringEnumerationsProcessor;
+
+  tsgen::SharedXSDElementProcessors simpleTypeSubProcessors = {
+      std::make_shared<tsgen::XSDStringRestrictionElementProcessor>(
+          xsdStringEnumerationsProcessor),
+      std::make_shared<tsgen::XSDIntegerRestrictionElementProcessor>(),
+      std::make_shared<tsgen::XSDDecimalRestrictionElementProcessor>(),
+      std::make_shared<tsgen::XSDDatetimeRestrictionElementProcessor>()
+  };
+
+  util::PascalCaseTextProcessorImp pascalCaseTextProcessorImp;
+  tsgen::SharedXSDElementProcessors complexTypeSubProcessors = {
+      std::make_shared<tsgen::XSDSequenceTypeElementProcessor>(pascalCaseTextProcessorImp)
+  };
+
+  tsgen::SharedXSDElementProcessors subprocessors = {
+      std::make_shared<tsgen::XSDSimpleTypeElementProcessor>(
+          simpleTypeSubProcessors),
+      std::make_shared<tsgen::XSDComplexTypeElementProcessor>(complexTypeSubProcessors)
+  };
+  tsgen::XSDToTypescriptParseTree xsdToTypescriptParseTree(subprocessors);
+  std::shared_ptr<xmlparse::XMLElement> xmlElementPtr(
+      new xmlparse::XMLElementAdapter(*doc.RootElement()));
+  std::cout << xsdToTypescriptParseTree.process(xmlElementPtr) << std::endl;
+
   return 0;
 }
