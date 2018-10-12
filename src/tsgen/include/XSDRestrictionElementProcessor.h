@@ -1,6 +1,6 @@
 #pragma once
 
-#include <XSDElementProcessorImp.h>
+#include <XSDElementProcessor.h>
 
 namespace tsgen {
   typedef std::optional<std::string> OptionalString;

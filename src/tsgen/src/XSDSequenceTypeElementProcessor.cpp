@@ -3,16 +3,10 @@
 #include <sstream>
 #include <unordered_map>
 
-const std::unordered_map<std::string, std::string> simpleTypeMap = {
-    {"string",   "string"},
-    {"int",      "number"},
-    {"decimal",  "number"},
-    {"dateTime", "string"}
-};
-
 tsgen::XSDSequenceTypeElementProcessor::XSDSequenceTypeElementProcessor(
-    const util::PascalCaseTextProcessor &pascalCaseTextProcessor
-) : pascalCaseTextProcessor_(pascalCaseTextProcessor) {
+    const util::PascalCaseTextProcessor &pascalCaseTextProcessor,
+    const PrimitiveTypeMap& primitiveTypeMap
+) : pascalCaseTextProcessor_(pascalCaseTextProcessor), primitiveTypeMap_(primitiveTypeMap) {
 }
 
 std::string tsgen::XSDSequenceTypeElementProcessor::process(
@@ -25,8 +19,8 @@ std::string tsgen::XSDSequenceTypeElementProcessor::process(
   for (const auto &child : element->children("element")) {
     std::string type = child->findAttribute("type")->value();
 
-    auto simpleType = simpleTypeMap.find(type);
-    if (simpleType != simpleTypeMap.end()) {
+    auto simpleType = this->primitiveTypeMap_.find(type);
+    if (simpleType != this->primitiveTypeMap_.end()) {
       type = simpleType->second;
     } else {
       this->pascalCaseTextProcessor_.process(type);

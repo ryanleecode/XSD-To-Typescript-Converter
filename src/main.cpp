@@ -13,10 +13,18 @@
 #include <XSDComplexTypeElementProcessor.h>
 #include <PascalCaseTextProcessorImp.h>
 #include <XSDSequenceTypeElementProcessor.h>
+#include <XSDAllTypeElementProcessor.h>
 
 int main(int argc, char const *argv[]) {
   tinyxml2::XMLDocument doc;
   doc.LoadFile("Elements.xsd");
+
+  const std::unordered_map<std::string, std::string> primitiveTypeMap = {
+      {"string",   "string"},
+      {"int",      "number"},
+      {"decimal",  "number"},
+      {"dateTime", "string"}
+  };
 
   tsgen::XSDStringEnumerationsProcessor xsdStringEnumerationsProcessor;
 
@@ -30,7 +38,8 @@ int main(int argc, char const *argv[]) {
 
   util::PascalCaseTextProcessorImp pascalCaseTextProcessorImp;
   tsgen::SharedXSDElementProcessors complexTypeSubProcessors = {
-      std::make_shared<tsgen::XSDSequenceTypeElementProcessor>(pascalCaseTextProcessorImp)
+      std::make_shared<tsgen::XSDSequenceTypeElementProcessor>(pascalCaseTextProcessorImp, primitiveTypeMap),
+      std::make_shared<tsgen::XSDAllTypeElementProcessor>(pascalCaseTextProcessorImp, primitiveTypeMap)
   };
 
   tsgen::SharedXSDElementProcessors subprocessors = {
